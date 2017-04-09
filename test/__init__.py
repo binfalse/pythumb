@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # encoding=utf8
+
 import logging
 try:  # Python 2.7+
     from logging import NullHandler

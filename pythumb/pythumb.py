@@ -1,16 +1,32 @@
 #!/usr/bin/env python
 # encoding=utf8
 from __future__ import unicode_literals 
-import tempfile
+from xml.dom import minidom
+from PIL import ImageDraw
+from PIL import ImageFont
+from PIL import Image
 import subprocess
+import tempfile
+import urllib
+import re
+import os
+import sys
+import magic
+import zipfile
 import logging
+import pdb
+from StringIO import StringIO
+
 log = logging.getLogger(__name__)
 
+reload(sys)
+sys.setdefaultencoding('utf8')
 
-_overwrite_thumb = false
 
-_thumbWidth = 300
-_thumbHeight = 300
+_overwrite_thumb = False
+
+_thumb_width = 300
+_thumb_height = 300
 
 
 _img_ext_regex = re.compile (r'^.*\.(jpg|jpeg|png)$', flags=re.IGNORECASE)
@@ -18,10 +34,11 @@ _cover_regex = re.compile (r'.*cover.*\.(jpg|jpeg|png)', flags=re.IGNORECASE)
 
 
 
+
 # set the desired thumbnail dimensions
 def set_thumb_dimensions (width, height):
-	_thumbWidth = width
-	_thumbHeight = height
+	_thumb_width = width
+	_thumb_height = height
 
 # should existing thumbnails be overwritten?
 def set_overwrite_thumb (boolean):
@@ -48,7 +65,7 @@ def thumb_from_name (name, preview_file):
 	fontBox = font.getsize (name)
 	
 	# decrease font size until the name fits into the image
-	while fontBox[0] > _thumbWidth - 20 or fontBox[1] > _thumbHeight - 50:
+	while fontBox[0] > _thumb_width - 20 or fontBox[1] > _thumb_height - 50:
 		fontsize = fontsize - 1
 		font = ImageFont.truetype ("font.ttf", fontsize)
 		fontBox = font.getsize (name)
@@ -61,7 +78,7 @@ def thumb_from_name (name, preview_file):
 	log.debug ("pos:: " + str (x) + "/" + str (y))
 	
 	# create the image and draw the text
-	img = Image.new("RGB", (_thumbWidth,_thumbHeight), (255,255,255))
+	img = Image.new("RGB", (_thumb_width,_thumb_height), (255,255,255))
 	draw = ImageDraw.Draw (img)
 	draw.text ((x, y), name, (50, 50, 50), font=font)
 	img.save (preview_file)
@@ -89,12 +106,14 @@ def crop_preview (orginal_file):
 # generate a thumbnail with imagemagick
 def thumb_from_image (orginal_file, preview_file):
 	log.info ("generating thumbnail with imagemagick for " + orginal_file)
-	cmd = ["convert", "-thumbnail", str (thumbWidth) + "x" + str (thumbHeight), "-flatten", orginal_file, preview_file]
-	log.debug ("executing " + cmd)
+	pdb.set_trace()
+	cmd = ["convert", "-thumbnail", str (_thumb_width) + "x" + str (_thumb_height), "-flatten", orginal_file, preview_file]
+	
+	log.debug ("executing " + str (cmd))
 	return_code = subprocess.call(cmd)
 	
 	if return_code != 0:
-		log.error ("error converting: " + orginal_file + " to " + preview_file + " -- command war: " + cmd + "\n")
+		log.error ("error converting: " + orginal_file + " to " + preview_file + " -- command was: " + str (cmd) + "\n")
 		return False
 	return True
 
@@ -144,7 +163,7 @@ def _thumb_from_epub_manifest (epub, preview_file):
 					#return 
 					path = os.path.join (os.path.dirname (rootfile_path), item_href)
 					log.debug ("images from epub manifest: " + path)
-					return previewFromZipImage (epub, path, preview_file)
+					return _thumb_from_zipped_image (epub, path, preview_file)
 	
 	# nothing found
 	return False
@@ -162,18 +181,18 @@ def _thumb_from_epub_file_cover (epub, preview_file):
 		# does the image match the cover-file regex?
 		# then we're good to go with that :)
 		if _cover_regex.match(fileinfo.filename):
-			if previewFromZipImage (epub, fileinfo.filename, preview_file):
+			if _thumb_from_zipped_image (epub, fileinfo.filename, preview_file):
 				return True
 		
 		# otherwise add it to candidates if it is and image
 		if _img_ext_regex.match(fileinfo.filename):
 			candidates.append(fileinfo)
 	
-	log.debug ("found candidates: " + candidates)
+	log.debug ("found candidates: " + str (candidates))
 	if candidates:
 		candidate = max (candidates, key=lambda f: f.file_size)
 		log.debug ("best candidate: " + candidate.filename)
-		return previewFromZipImage (epub, candidate.filename, preview_file)
+		return _thumb_from_zipped_image (epub, candidate.filename, preview_file)
 	
 	return False
 
@@ -203,7 +222,7 @@ def thumb_from_html (orginal_file, preview_file):
 	# render the page with cutycapt
 	with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 		cmd = ["cutycapt", "--max-wait=1000", "--url=file://" + os.getcwd () + "/" + orginal_file, "--out=" + temp.name]
-		log.debug ("executing " + cmd)
+		log.debug ("executing " + str (cmd))
 		return_code = subprocess.call (cmd)
 		if return_code != 0:
 			log.error ("error converting html file: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
@@ -224,7 +243,7 @@ def thumb_from_office_doc (orginal_file, preview_file):
 	# first convert it into a PDF -> libre office is necessary
 	with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
 		cmd = ["convert", orginal_file, temp.name]
-		log.debug ("executing " + cmd)
+		log.debug ("executing " + str (cmd))
 		return_code = subprocess.call (cmd)
 		
 		if return_code != 0:
@@ -238,10 +257,10 @@ def thumb_from_office_doc (orginal_file, preview_file):
 
 # generate a thumbnail for a file
 def thumb_from_file (orginal_file, preview_file, orginal_fileName):
-	log.info ("generating preview for file " + orginal_file)
+	log.info ("generating preview for file " + orginal_file + " to " + preview_file)
 	
 	if not _overwrite_thumb and os.path.exists (preview_file):
-		return
+		return False
 	
 	if not os.path.exists(orginal_file):
 		raise IOError ("file does not exist: " + orginal_file)
@@ -254,26 +273,31 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 	
 	# is that an image? -> just use image magic...
 	if 'image/' in mime:
+		log.debug ("is an image")
 		if thumb_from_image (orginal_file, preview_file):
 			return True
 	
 	# pdf like document? -> image magic...
 	if any (option in mime for option in ['application/pdf', 'application/postscript', 'djvu']):
+		log.debug ("is pdf like")
 		if thumb_from_image (orginal_file + "[0]", preview_file):
 			return True
 	
 	# epub? -> extract image if possible
-	if 'application/epub+zip' in mime:
-		if thumb_from_epub (orginal_file, preview_file, orginal_fileName):
+	if 'epub+zip' in mime:
+		log.debug ("is an epub")
+		if thumb_from_epub (orginal_file, preview_file):
 			return True
 	
 	# HTML page? -> screenshot
 	if 'text/html' in mime:
+		log.debug ("is html")
 		if thumb_from_html (orginal_file, preview_file):
 			return True
 	
 	# office document?
 	if any (option in mime for option in ['application/msword', 'application/vnd.ms-', 'application/vnd.oasis.opendocument.']):
+		log.debug ("is office doc")
 		if thumb_from_office_doc (orginal_file, preview_file):
 			return True
 		
