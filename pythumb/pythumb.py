@@ -14,7 +14,6 @@ import sys
 import magic
 import zipfile
 import logging
-import pdb
 from StringIO import StringIO
 
 log = logging.getLogger(__name__)
@@ -25,18 +24,27 @@ sys.setdefaultencoding('utf8')
 
 _overwrite_thumb = False
 
-_thumb_width = 300
-_thumb_height = 300
+default_thumb_width = 300
+default_thumb_height = 300
+
+_thumb_width = default_thumb_width
+_thumb_height = default_thumb_height
 
 
 _img_ext_regex = re.compile (r'^.*\.(jpg|jpeg|png)$', flags=re.IGNORECASE)
 _cover_regex = re.compile (r'.*cover.*\.(jpg|jpeg|png)', flags=re.IGNORECASE)
 
 
+# DEBUGGING
+import pdb
+#pdb.set_trace()
+
 
 
 # set the desired thumbnail dimensions
 def set_thumb_dimensions (width, height):
+	global _thumb_width
+	global _thumb_height
 	_thumb_width = width
 	_thumb_height = height
 
@@ -106,7 +114,6 @@ def crop_preview (orginal_file):
 # generate a thumbnail with imagemagick
 def thumb_from_image (orginal_file, preview_file):
 	log.info ("generating thumbnail with imagemagick for " + orginal_file)
-	pdb.set_trace()
 	cmd = ["convert", "-thumbnail", str (_thumb_width) + "x" + str (_thumb_height), "-flatten", orginal_file, preview_file]
 	
 	log.debug ("executing " + str (cmd))
