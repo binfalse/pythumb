@@ -25,27 +25,27 @@ class TestEpub (unittest.TestCase):
 	
 	def test_one (self):
 			f = "test/files/book-1.epub"
-			self.assertTrue (os.path.exists (f), "cannot find first epub")
+			self.assertTrue (os.path.exists (f), "cannot find " + f)
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
-				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from epub")
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
 	
 	def test_two (self):
 			f = "test/files/book-2.epub"
-			self.assertTrue (os.path.exists (f), "cannot find first epub")
+			self.assertTrue (os.path.exists (f), "cannot find " + f)
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
-				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from epub")
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
 	
 	def test_set_size (self):
 			f = "test/files/book-1.epub"
-			self.assertTrue (os.path.exists (f), "cannot find first epub")
+			self.assertTrue (os.path.exists (f), "cannot find " + f)
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				pythumb.set_thumb_dimensions (50, 50)
-				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from epub")
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				# restore original dimensions
 				pythumb.set_thumb_dimensions (pythumb.default_thumb_width, pythumb.default_thumb_height)
 				check_thumbnail (self, temp.name)

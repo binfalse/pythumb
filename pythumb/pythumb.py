@@ -68,7 +68,7 @@ def thumb_from_name (name, preview_file):
 	log.debug ("drawing title " + name)
 	
 	# start font
-	fontsize = 20
+	fontsize = 60
 	font = ImageFont.truetype ("font.ttf", fontsize)
 	fontBox = font.getsize (name)
 	
@@ -81,8 +81,8 @@ def thumb_from_name (name, preview_file):
 	log.debug ("fontsize: " + str (fontsize) + " font box: " + str (fontBox))
 	
 	# calculate the startpoint for the text
-	x = 100 - fontBox[0] / 2
-	y = 50 - fontBox[1] / 2
+	x = (_thumb_width - fontBox[0]) / 2
+	y = (_thumb_height - fontBox[1]) / 2
 	log.debug ("pos:: " + str (x) + "/" + str (y))
 	
 	# create the image and draw the text
@@ -90,6 +90,7 @@ def thumb_from_name (name, preview_file):
 	draw = ImageDraw.Draw (img)
 	draw.text ((x, y), name, (50, 50, 50), font=font)
 	img.save (preview_file)
+	return True
 
 
 # crop a very large image to a size of max 1000x1000

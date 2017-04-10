@@ -15,35 +15,49 @@ from testhelpers import check_thumbnail
 class TestImage (unittest.TestCase):
 	
 	def test_one (self):
-			f = "test/files/image-3.png"
+			f = "test/files/office-1.doc"
 			self.assertTrue (os.path.exists (f), "cannot find " + f)
-			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
 	
 	def test_two (self):
-			f = "test/files/image-4.svg"
+			f = "test/files/office-2.docx"
 			self.assertTrue (os.path.exists (f), "cannot find " + f)
-			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
 	
 	def test_three (self):
-			f = "test/files/image-2.jpg"
+			f = "test/files/office-3.ods"
 			self.assertTrue (os.path.exists (f), "cannot find " + f)
-			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
 	
 	def test_four (self):
-			f = "test/files/image-1.jpeg"
+			f = "test/files/office-4.odt"
 			self.assertTrue (os.path.exists (f), "cannot find " + f)
-			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
-
-
+	
+	def test_five (self):
+			f = "test/files/office-5.xls"
+			self.assertTrue (os.path.exists (f), "cannot find " + f)
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
+				os.remove (temp.name)
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				check_thumbnail (self, temp.name)
+	
+	def test_six (self):
+			f = "test/files/office-6.xlsx"
+			self.assertTrue (os.path.exists (f), "cannot find " + f)
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
+				os.remove (temp.name)
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				check_thumbnail (self, temp.name)
