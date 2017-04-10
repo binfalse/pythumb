@@ -31,6 +31,9 @@ default_thumb_height = 300
 _thumb_width = default_thumb_width
 _thumb_height = default_thumb_height
 
+# TODO: option to set the color
+_font_color = (50, 50, 50)
+_line_color = (80, 80, 80)
 
 _img_ext_regex = re.compile (r'^.*\.(jpg|jpeg|png)$', flags=re.IGNORECASE)
 _cover_regex = re.compile (r'.*cover.*\.(jpg|jpeg|png)', flags=re.IGNORECASE)
@@ -92,7 +95,7 @@ def thumb_from_name (name, preview_file):
 	log.debug ("drawing title " + str (name) + " with fontsize: " + str (fontsize))
 	
 	pic_width = linewidth + 20
-	pic_height = (len (name) * (lineheight + 2)) + 20
+	pic_height = (len (name) * (lineheight + 2)) + 40
 	
 	img = Image.new("RGB", (pic_width, pic_height), (255,255,255))
 	draw = ImageDraw.Draw (img)
@@ -106,8 +109,17 @@ def thumb_from_name (name, preview_file):
 		y = currentY
 		
 		log.debug ("drawing " + token + " at: " + str (x) + ":" + str(y))
-		draw.text ((x, y), token, (50, 50, 50), font=font)
+		draw.text ((x, y), token, _font_color, font=font)
 		currentY += lineheight + 2
+	
+	# add some lines, that the pic doesn't look too empty...
+	# TODO: space for improvements.. ;-)
+	draw.line((5, pic_height - 5, pic_width - 5, pic_height - 5), fill=_line_color)
+	draw.line((5, 5, pic_width - 5, 5), fill=_line_color)
+	
+	draw.line((15, pic_height - 8, pic_width - 15, pic_height - 8), fill=_line_color)
+	draw.line((15, 8, pic_width - 15, 8), fill=_line_color)
+	
 	
 	with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 		img.save (temp.name)
