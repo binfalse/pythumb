@@ -132,17 +132,18 @@ def thumb_from_name (name, preview_file):
 def crop_preview (orginal_file):
 	img = Image.open (orginal_file)
 	
+	width = 1000
+	height = 1000
+	
 	if img.size[0] < width and img.size[1] < height:
 		return True
 	
-	width = 1000
-	height = 1000
 	if img.size[0] < 1000:
 		width = img.size[0]
 	if img.size[1] < 1000:
 		height = img.size[1]
 	
-	log.debug ("cropping the image " + orginal_file + " (" + img.size + ")" + " to " + str (width) + "x" + str (height))
+	log.debug ("cropping the image " + orginal_file + " (" + str (img.size) + ")" + " to " + str (width) + "x" + str (height))
 	return img.crop ((0, 0, width, height)).save (orginal_file)
 
 

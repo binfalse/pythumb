@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>binfalse</title>
+	
+	<meta name="author" content="Martin Scharm">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link rel="icon" type="image/png" href="https://binfalse.de/assets/ico/favicon.ico">
+	<link href="index_files/bootstrap.css" rel="stylesheet">
+	<link href="index_files/font-awesome.css" rel="stylesheet">
+	<link href="index_files/syntax.css" rel="stylesheet">
+	<link href="index_files/style.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="index_files/jquery.js"></script>
+	
+	<!-- lightbox -->
+	<script type="text/javascript" src="index_files/lightbox.js"></script>
+	<link href="index_files/lightbox.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="index_files/MathJax.js"></script>
+
+	<link rel="alternate" type="application/rss+xml" title="" href="https://binfalse.de/feed.xml">
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body><div style="display: none;" id="MathJax_Message"></div>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/binfalse">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/binfalse">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			<a class="navbar-brand" href="https://binfalse.de/">
+				<img src="index_files/mainpic.png" class="img-circle">
+				binfalse
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="https://binfalse.de/">Home</a></li>
+				<li><a href="https://binfalse.de/categories/">Categories</a></li>
+				<li><a href="https://binfalse.de/tags/">Tags</a></li>
+
+<li><a href="https://binfalse.de/about">about</a></li>
+
+<li><a href="https://binfalse.de/contact">contact</a></li>
+
+<li><a href="https://binfalse.de/man-page">man-page</a></li>
+
+<li><a href="https://binfalse.de/opt">opt</a></li>
+
+<li><a href="https://binfalse.de/software">software</a></li>
+
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="https://binfalse.de/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="https://binfalse.de/categories/"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="https://binfalse.de/tags/"><i class="fa fa-tags"></i>Tags</a></li>
+		
+		<li>
+			<a href="https://binfalse.de/about">
+				about
+			</a>
+		</li>
+		
+		<li>
+			<a href="https://binfalse.de/contact">
+				contact
+			</a>
+		</li>
+		
+		<li>
+			<a href="https://binfalse.de/man-page">
+				man-page
+			</a>
+		</li>
+		
+		<li>
+			<a href="https://binfalse.de/opt">
+				opt
+			</a>
+		</li>
+		
+		<li>
+			<a href="https://binfalse.de/software">
+				software
+			</a>
+		</li>
+		
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div style="min-height: 16351px;" class="col-sm-3 sidebar hidden-xs">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="https://binfalse.de/">
+		<img src="index_files/mainpic.png" class="img-circle">
+	</a>
+	<h3 class="title">
+        <a href="https://binfalse.de/">binfalse</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	stuff. just for the records.
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/binfalse">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/binfalse">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/binfalse">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://binfalse.de/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>binfalse </h1>
+</div>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    February
+    7th,
+    
+    2017
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2017/02/07/android-no-internet-access-detected-won-t-automatically-reconnect-aka-connected-no-internet/">#android: No Internet Access Detected, won't automatically reconnect -aka- Connected, no Internet.</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2017/no-internet-b.png" title="Android: No Internet Access Detected, won't automatically reconnect." target="_blank" data-lightbox="/2017/02/07/android-no-internet-access-detected-won-t-automatically-reconnect-aka-connected-no-internet-/2017/02/07/android-no-internet-access-detected-won-t-automatically-reconnect-aka-connected-no-internet/" data-title="Android: No Internet Access Detected, won't automatically reconnect." class="link-noborder">
+    
+        <img src="index_files/no-internet-b.png" alt="Android: No Internet Access Detected, won't automatically reconnect." style="max-width:250px">
+    
+    </a>
+    
+    
+        <figcaption>Android: No Internet Access Detected, won't automatically reconnect.</figcaption>
+    
+    </figure>
+</div>
+
+<p>Hands up: who knows what an android device does when it sees a WiFi network coming up?
+Exactly, since <a href="https://en.wikipedia.org/wiki/Android_Lollipop">Lollipo (Android 5)</a> your phone or tablet <em>leaks</em> a quick <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> request to check if it has internet access.
+This check is, for example, done with <code class="highlighter-rouge">clients3.google.com/generate_204</code>, a “webpage” that always returns an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success">HTTP status code <code class="highlighter-rouge">204 No Content</code></a>.
+Thus, if the phone receives a <code class="highlighter-rouge">204</code> it is connected to the internet, otherwise it assumes that this network does not provide proper internet access or is just a <a href="https://en.wikipedia.org/wiki/Captive_portal">captive portal.</a>
+However, that way Google of course always knows when you connect from 
+where. And how often. And which device you’re using. etc… :(</p>
+
+<h2 id="how-to-prevent-the-leak">How to prevent the leak</h2>
+
+<p>Even if people may like that feature,
+that is of course a privacy issue – so how can we counter that?</p>
+
+<p>I briefly <a href="https://binfalse.de/2015/09/26/adaway/">mentioned that a few years ago.</a>
+You could use <a href="http://www.adaway.org/">AdAway</a> (<a href="https://f-droid.org/repository/browse/?fdid=org.adaway">available from F-Droid</a>, <a href="https://github.com/Free-Software-for-Android/AdAway">source from GitHub</a>) to redirect all traffic for <code class="highlighter-rouge">clients3.google.com</code> and <code class="highlighter-rouge">clients.l.google.com</code> to nirvana.</p>
+
+<p>I already maintain a convenient configuration for AdAway at <a href="https://stuff.lesscomplex.org/adaway.txt">stuff.lesscomplex.org/adaway.txt</a>, which blocks Google’s captive portal detection.</p>
+
+<p>However, blocking that “feature” also comes with some drawbacks…</p>
+
+<h2 id="the-downside-of-blocking-captive-portal-detection">The downside of blocking captive portal detection</h2>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2017/no-internet-a.png" title="Android: Connected, no Internet." target="_blank" data-lightbox="/2017/02/07/android-no-internet-access-detected-won-t-automatically-reconnect-aka-connected-no-internet-/2017/02/07/android-no-internet-access-detected-won-t-automatically-reconnect-aka-connected-no-internet/" data-title="Android: Connected, no Internet." class="link-noborder">
+    
+        <img src="index_files/no-internet-a.png" alt="Android: Connected, no Internet." style="max-width:250px">
+    
+    </a>
+    
+    
+        <figcaption>Android: Connected, no Internet.</figcaption>
+    
+    </figure>
+</div>
+
+<p>The consequences of blocking all request of the captive portal detection are obvious:
+your phone assumes that no network hat internet access.
+And therefore, it wouldn’t connect automatically, saying</p>
+
+<blockquote>
+  <p>No Internet Access Detected, won’t automatically reconnect.
+<small>see image on top</small></p>
+</blockquote>
+
+<p>That will probably increase your mobile data usage, as you always need (to remember) to do connect manually.
+And even if you manually connect to a network “without internet” the WiFi icon will get an exclamation mark and the phone says</p>
+
+<blockquote>
+  <p>Connected, no Internet.
+<small>see second image</small></p>
+</blockquote>
+
+<p>Annoying…</p>
+
+<h2 id="what-can-we-do-about-it">What can we do about it?</h2>
+
+<h3 id="disable-captive-portal-detection">Disable captive portal detection</h3>
+
+<p>With a rooted phone you can simply disable captive portal detection.
+Just get a root-shell through <a href="https://developer.android.com/studio/command-line/adb.html">adb</a> (or <a href="http://web.archive.org/web/20161224202927/https://wiki.cyanogenmod.org/w/Doc:_sshd">SSH</a> etc) to run the following command:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">settings put global captive_portal_detection_enabled 0</code></pre></figure>
+
+<p>One small drawback of that approach: you need to execute that again after flashing a new image…
+However, I guess you’ll anyway have a small workflow for re-flashing your phone – just add that tiny bit to it ;-)</p>
+
+<p>Another drawback is that you loose the captive portal detection…
+Of course, that’s what you intended, but sometimes it may be useful to have that feature in hotels etc..</p>
+
+<h3 id="change-the-server-for-captive-portal-detection-with-the-android-api">Change the server for captive portal detection with the Android API</h3>
+
+<p>You can also change the URL to the captive portal server to a server under your control.
+Let’s say you have a site running at <a href="https://scratch.binfalse.de/generate_204"><code class="highlighter-rouge">scratch.binfalse.de/generate_204</code></a> that simulates a <em>captive portal detection server backend</em>(!?) and always returns <code class="highlighter-rouge">204</code>, no matter what request.
+Then you can use that URL for captive portal detection!
+Override the captive portal server on a root-shell (adb or SSH etc) by calling:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">settings put global captive_portal_server scratch.binfalse.de</code></pre></figure>
+
+<p>This way you retain the captive portal detection without leaking data to Google.
+However, you will again loose the setting when flashing the phone again..</p>
+
+<h3 id="change-the-server-for-captive-portal-detection-using-adaway">Change the server for captive portal detection using AdAway</h3>
+
+<p>Another option for changing the captive portal detection server is to change its IP address to one that’s under your control.
+You can do that with AdAway, for example.
+Let’s say your captive portal detection server has the IP address <code class="highlighter-rouge">5.189.140.231</code>, then you may add the following to your AdAway configuration:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">5.189.140.231 clients3.google.com
+5.189.140.231 clients.l.google.com</code></pre></figure>
+
+<p>The webserver at <code class="highlighter-rouge">5.189.140.231</code> should then of course accept requests for the foreign domains.</p>
+
+<p>This way, you also don’t leak the data to Google and you will also 
+keep the settings after flashing the phone (as long as you leave AdAway 
+installed).
+However, there are also some things to keep in mind:
+First, I could imagine that Google may be a bit upset if you redirect 
+their domains to a different server?
+And second, you don’t know if those are the only servers used for 
+captive portal detection.
+If Google at some point comes up with another domain for captive portal 
+detection, such as <code class="highlighter-rouge">captive.google.com</code>, you’re screwed.</p>
+
+<h2 id="supplementary-material">Supplementary material</h2>
+
+<p>See also the <a href="https://developer.android.com/reference/android/net/CaptivePortal.html">CaptivePortal description at the android reference.</a></p>
+
+<h3 id="create-captive-portal-detection-server-with-nginx">Create captive portal detection server with Nginx</h3>
+
+<p>Just add the following to your <a href="http://nginx.org/">Nginx</a> configuration:</p>
+
+<figure class="highlight"><pre><code class="language-nginx" data-lang="nginx"><span class="k">location</span> <span class="n">/generate_204</span> <span class="p">{</span> <span class="kn">return</span> <span class="mi">204</span><span class="p">;</span> <span class="p">}</span></code></pre></figure>
+
+<h3 id="create-captive-portal-detection-server-with-apache">Create captive portal detection server with Apache</h3>
+
+<p>If you’re running an <a href="https://httpd.apache.org/">Apache web server</a> you need to enable <code class="highlighter-rouge">mod_rewrite</code>, then create a <code class="highlighter-rouge">.htaccess</code> in the <a href="https://httpd.apache.org/docs/current/mod/core.html#documentroot">DocumentRoot</a> containing:</p>
+
+<figure class="highlight"><pre><code class="language-apache" data-lang="apache"><span class="p">&lt;</span><span class="nl">IfModule</span><span class="sr"> mod_rewrite.c</span><span class="p">&gt;
+</span>	<span class="nc">RewriteEngine</span> On
+	<span class="nc">RewriteCond</span> %{REQUEST_URI} /generate_204$
+	<span class="nc">RewriteRule</span> $ / [R=204]
+<span class="p">&lt;/</span><span class="nl">IfModule</span><span class="p">&gt;</span></code></pre></figure>
+
+<h3 id="create-captive-portal-detection-server-with-php">Create captive portal detection server with PHP</h3>
+
+<p>A <a href="http://php.net/manual/en/function.http-response-code.php">simple PHP script</a> will also do the trick:</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span> <span class="nb">http_response_code</span> <span class="p">(</span><span class="mi">204</span><span class="p">);</span> <span class="cp">?&gt;</span></code></pre></figure>
+
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    February
+    6th,
+    
+    2017
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2017/02/06/docker-mysql-backup/">Docker MySQL Backup</a>
+  </h2>
+
+  <div>
+    <p>Even with Docker you need to care about backups.. ;-)</p>
+
+<p>As you usually mount all the persistent data into the container the files will actually be on your host.
+Thus, you can simply do the backup of these files.
+However, for MySQL I prefer having an actual SQL-dump.
+Therefore I just developed the Docker MySQL-Backup tool.
+You will find the <a href="https://github.com/binfalse/docker-mysql-backup">sources at the corresponding GitHub repository.</a></p>
+
+<h2 id="how-does-docker-mysql-backup-work">How does Docker MySQL-Backup work?</h2>
+
+<p>The tool basically consists of two scripts:</p>
+
+<ul>
+  <li><a href="https://github.com/binfalse/docker-mysql-backup/blob/master/etc/default/docker-mysql-backup">a config file in <code class="highlighter-rouge">/etc/default/docker-mysql-backup</code></a> to setup the path for the backup location and the path to gzip,</li>
+  <li><a href="https://github.com/binfalse/docker-mysql-backup/blob/master/etc/cron.daily/docker-mysql-backup">the script <code class="highlighter-rouge">/etc/cron.daily/docker-mysql-backup</code></a> which does the actual job.</li>
+</ul>
+
+<p>The script <code class="highlighter-rouge">/etc/cron.daily/docker-mysql-backup</code> parses the output of the <code class="highlighter-rouge">docker ps</code> command to find running containers of the MySQL image.
+More precisely, it looks for containers of images that start with <code class="highlighter-rouge">\smysql</code>.
+That of course only matches the original MySQL image names (if you have a
+ good reason to derive an own version of that image please tell me!).
+For every matching <code class="highlighter-rouge">$container</code> the script will exec the following command:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$container</span><span class="s2">"</span> <span class="se">\</span>
+	sh -c <span class="s1">'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"'</span> <span class="se">\</span>
+	| <span class="k">${</span><span class="nv">GZIP</span><span class="k">}</span> -9 &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">BACKUP_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">NOW</span><span class="k">}</span><span class="s2">_complete.sql.gz"</span></code></pre></figure>
+
+<p>With the following variables:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">$BACKUP_DIR</code> is a concatenation of <code class="highlighter-rouge">$BACKUP_BASE</code> (configured in <code class="highlighter-rouge">/etc/default/docker-mysql-backup</code>) and the container name,</li>
+  <li><code class="highlighter-rouge">$NOW</code> is the current time stamp as <code class="highlighter-rouge">date +"%Y-%m-%d_%H-%M"</code>.</li>
+</ul>
+
+<p>Thus, the backups are compressed, organised in subdirectories of <code class="highlighter-rouge">$BACKUP_BASE</code>, and the SQL-dumps have a time stamp in their names.
+<code class="highlighter-rouge">$BACKUP_BASE</code> defaults to <code class="highlighter-rouge">/srv/backup/mysql/</code>, but can be configured in <code class="highlighter-rouge">/etc/default/docker-mysql-backup</code>.</p>
+
+<p>Last but not least, the script also cleans the backups itself.
+It will keep the backups of the last 30 days and all backups of days that end with a <code class="highlighter-rouge">2</code>.
+So you will keep the backups from the 2<sup>nd</sup>, the 12<sup>th</sup>, and the 22<sup>nd</sup> of every month.</p>
+
+<p>As the script is stored in <code class="highlighter-rouge">/etc/cron.daily/</code> the cron tool will execute the backup script on a daily basis.</p>
+
+<h2 id="restore-a-dump">Restore a dump</h2>
+
+<p>Restoring the dump is quite easy.
+Let’s assume your container’s name is <code class="highlighter-rouge">$container</code> and the dump to restore carries the time stamp <code class="highlighter-rouge">$date</code>.
+Then you just need to run:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$container</span><span class="s2">"</span> -v <span class="s2">"</span><span class="k">${</span><span class="nv">BACKUP_BASE</span><span class="k">}</span><span class="s2">/docker_</span><span class="k">${</span><span class="nv">container</span><span class="k">}</span><span class="s2">"</span>:/srv sh -c <span class="se">\</span>
+      <span class="s1">'exec gunzip &lt; /srv/${date}_complete.sql.gz | mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'</span></code></pre></figure>
+
+<p>This will mount the backup directory in <code class="highlighter-rouge">/srv</code> of the running container and then decompress and import the SQL-dump on the fly.</p>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="manual-installation-through-github">Manual installation through GitHub</h3>
+
+<p>Clone the <a href="https://github.com/binfalse/docker-mysql-backup">Docker MySQL-Backup repository:</a></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/binfalse/docker-mysql-backup.git</code></pre></figure>
+
+<p>Copy the <a href="https://binfalse.de/etc/cron.daily/docker-mysql-backup">backup script</a> to the <code class="highlighter-rouge">cron.daily</code> (most likely <code class="highlighter-rouge">/etc/cron.daily/</code>) directory on your system:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">cp docker-mysql-backup/etc/cron.daily/docker-mysql-backup /etc/cron.daily/</code></pre></figure>
+
+<p>Copy the <a href="https://binfalse.de/etc/default/docker-mysql-backup">configuration</a> to <code class="highlighter-rouge">/etc/default/</code>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">cp docker-mysql-backup/etc/default/docker-mysql-backup /etc/default/</code></pre></figure>
+
+<h3 id="installation-from-my-apt-repository">Installation from my Apt repository</h3>
+
+<p>If you’re running a Debian-based system you may want to <a href="https://binfalse.de/software/apt-repo/">use my apt-repository to install the Docker MySQL-Backup tool.</a>
+In that case you just need to run</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">aptitude install bf-docker-mysql-backup</code></pre></figure>
+
+<p>Afterwards, look into <code class="highlighter-rouge">/etc/default/docker-mysql-backup</code> for configuration options.
+This way, you’ll always stay up-to-date with bug fixes and new features :)</p>
+
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    January
+    24th,
+    
+    2017
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2017/01/24/automatically-update-docker-images/">Automatically update Docker images</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2017/docker-auto-update.svg" title="Automatically Update Docker Images" target="_blank" data-lightbox="/2017/01/24/automatically-update-docker-images/2017/01/24/automatically-update-docker-images/" data-title="Automatically Update your Docker Images" class="link-noborder">
+    
+        <img src="index_files/docker-auto-update.png" alt="Automatically Update Docker Images" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Automatically Update your Docker Images</figcaption>
+    
+    </figure>
+</div>
+
+<p><a href="https://www.docker.com/">Docker</a> is cool. Jails tools into containers. That of course sounds clean and safe and beautiful etc.
+However, the tools are still buggy and subject to usual attacks, just as they were running on your main host!
+Thus, you still need to make sure your containers are up to date.</p>
+
+<p>But how would you do that?</p>
+
+<h1 id="approaches-so-far">Approaches so far</h1>
+
+<h3 id="docker-compose-pull">docker-compose pull</h3>
+
+<p>On the one hand, let’s assume you’re using <a href="https://www.docker.com/products/docker-compose">Docker Compose</a>, then you can go to the directory containing the <code class="highlighter-rouge">docker-compose.yml</code> and call</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker-compose pull
+docker-compose up -d --remove-orphans</code></pre></figure>
+
+<p>However, this will just update the images used in that Docker Compose
+ setup – all the other images on your system wouldn’t be updated.
+And you need to do that for <em>all</em> Docker Compose environments.
+And if you’re running 30 containers of the same image it would check 30 
+times for an update of that image – quite a waste or power and time..</p>
+
+<h3 id="dupdate">dupdate</h3>
+
+<p>On the other hand, you may use the <a href="https://binfalse.de/2016/12/03/handy-docker-tools/#dupdate-updates-images">dupdate tool, introduced earlier:</a></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">dupdate -s</code></pre></figure>
+
+<p>It is able to go through <em>all</em> your images and update them, one after the other.
+That way, all the images on your system will be updated.
+However, <code class="highlighter-rouge">dupdate</code> doesn’t know about running containers.
+Thus, currently running tools and services won’t be restarted..</p>
+
+<h1 id="better-docker-auto-update">Better: Docker Auto-Update</h1>
+
+<p>Therefore, I just developed a tool called <strong>Docker Auto-Update</strong> that combines the benefits of both approaches.
+It first calls <code class="highlighter-rouge">dupdate -s</code> to update all your images and then iterates over a pre-defined list of Docker Compose environments to call a <code class="highlighter-rouge">docker-compose up -d --remove-orphans</code>.</p>
+
+<p>The tool consists of three files:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">/etc/cron.daily/docker-updater</code> reads the configuration in <code class="highlighter-rouge">/etc/default/docker-updater</code> and does the regular update</li>
+  <li><code class="highlighter-rouge">/etc/default/docker-updater</code> stores the configuration. You need to set the <code class="highlighter-rouge">ENABLED</code> variable to <code class="highlighter-rouge">1</code>, otherwise the update tool won’t run.</li>
+  <li><code class="highlighter-rouge">/etc/docker-compose-auto-update.conf</code> carries a list of Docker Compose environments. Add the paths to the <code class="highlighter-rouge">docker-compose.yml</code> files on your system, one per line</li>
+</ul>
+
+<p>As it’s installed in <code class="highlighter-rouge">/etc/cron.daily/</code>, <a href="https://en.wikipedia.org/wiki/Cron">cron</a>
+ will take care of the job and update your images and containers on a 
+daily basis.
+If your system is configured properly, cron will send an email to the 
+systems administrator when it updates an image or restarts a container.</p>
+
+<p>You see, no magic, but a very convenient workflow! :)</p>
+
+<h1 id="installation">Installation</h1>
+
+<h3 id="manual">Manual</h3>
+
+<p>To install the Docker Auto-Update tool, you may clone the <a href="https://github.com/binfalse/docker-auto-update">git repository at GitHub</a>.
+Then,</p>
+
+<ol>
+  <li>move the <code class="highlighter-rouge">./etc/cron.daily/docker-updater</code> script to <code class="highlighter-rouge">/etc/cron.daily/docker-updater</code></li>
+  <li>move the <code class="highlighter-rouge">./etc/default/docker-updater</code> config file to <code class="highlighter-rouge">/etc/default/docker-updater</code></li>
+  <li>update the setup in <code class="highlighter-rouge">/etc/default/docker-updater</code> – at least set <code class="highlighter-rouge">ENABLED=1</code></li>
+  <li>create a list of Docker Compose config files in <code class="highlighter-rouge">/etc/docker-compose-auto-update.conf</code> - one path to a <code class="highlighter-rouge">docker-compose.yml</code> per line.</li>
+</ol>
+
+<h3 id="debian-package">Debian Package</h3>
+
+<p>If you’re using a Debian based system you may install the Docker-Tools <a href="https://binfalse.de/software/apt-repo/">through my apt-repository</a>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">aptitude install bf-docker-tools</code></pre></figure>
+
+<p>Afterwards, configure <code class="highlighter-rouge">/etc/default/docker-updater</code> and at least set <code class="highlighter-rouge">ENABLED=1</code>.
+This way, you’ll stay up-to-date with bug fixes etc.</p>
+
+<h1 id="disclaimer">Disclaimer</h1>
+
+<p>The tool will update your images and containers automatically – <strong>very convenient but also dangerous!</strong>
+The new version of an image may break your tool or may require an updated configuration.</p>
+
+<p>Therefore, I recommend to monitor your tools through <a href="https://www.nagios.org/">Nagios</a>/<a href="https://www.icinga.com/">Icinga</a>/<a href="http://mathias-kettner.com/check_mk.html">check_mk</a> or whatever.
+And study the mails generated by cron!</p>
+
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    January
+    21st,
+    
+    2017
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2017/01/21/rsync-of-zfs-data-with-a-freebsd-live-system/">Rsync of ZFS data with a FreeBSD live system</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2017/freebsd-boot.png" title="Booting into FreeBSD" target="_blank" data-lightbox="/2017/01/21/rsync-of-zfs-data-with-a-freebsd-live-system/2017/01/21/rsync-of-zfs-data-with-a-freebsd-live-system/" data-title="Booting into FreeBSD" class="link-noborder">
+    
+        <img src="index_files/freebsd-boot.png" alt="Booting into FreeBSD" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Booting into FreeBSD</figcaption>
+    
+    </figure>
+</div>
+
+<p>Let’s <em>assume</em> you rendered your <a href="https://www.freebsd.org/">FreeBSD</a> system unbootable.. Yeah, happens to the best, but how can you still copy the data stored on a <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> to another machine?
+You probably just shouted <a href="https://rsync.samba.org/"><strong>RSYNC</strong></a> - but it’s not that easy.</p>
+
+<p>You would need a FreeBSD live os (either on a USB pen drive or on a 
+CD/DVD) and boot into that system.
+However, by default you do not have network, the ZPool is not mounted, 
+there is no rsync and SSH is not running, and the live os is not 
+writable, which brings another few issues…</p>
+
+<p>This is a step-by-step how-to through all the obstacles. Just boot into your live os (get it from <a href="https://www.freebsd.org/where.html">freebsd.org</a>) and go on with the following…</p>
+
+<h2 id="get-networking">Get Networking</h2>
+
+<p>By default your live system does not have networking setup correctly.
+Call <code class="highlighter-rouge">ifconfig</code> to see if the network interface is up. If it’s not you can bring it up using:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ifconfig em0 up</code></pre></figure>
+
+<p><small>(assuming your inteface is called em0)</small></p>
+
+<p>If it is up, you need to configure it.
+When you’re using a DHCP server you can just ask for an IP address using:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">dhclient em0</code></pre></figure>
+
+<p>Otherwise you need to configure the addresses manually:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ifconfig em0 inet 1.2.3.4 netmask 255.255.255.0</code></pre></figure>
+
+<p>Afterwards you should be able to ping other machines, such as</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ping 8.8.8.8</code></pre></figure>
+
+<h2 id="mount-the-zpool">Mount the ZPool</h2>
+
+<p>Your ZPool won’t be mounted by default; you need to do it manually.
+To list all pools available on that machine just call:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">zpool import</code></pre></figure>
+
+<p>This searches through the devices in <code class="highlighter-rouge">/dev</code> to discover ZPools. You may specify a different directory with <code class="highlighter-rouge">-d</code> (see <a href="http://www.unix.com/man-page/freebsd/8/zpool/">man page for zpool</a>).
+To actually import and mount your ZPool you need to provide its name, for example:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">zpool import -f -o <span class="nv">altroot</span><span class="o">=</span>/mnt zroot</code></pre></figure>
+
+<p>This will import the ZPool <code class="highlighter-rouge">zroot</code>. Moreover, the argument <code class="highlighter-rouge">-o altroot=/mnt</code> will mount it to <code class="highlighter-rouge">/mnt</code> instead of <code class="highlighter-rouge">/</code> and the <code class="highlighter-rouge">-f</code> will mount it even if it may be in use by another system (here we’re sure it isn’t, aren’t we?).</p>
+
+<h2 id="create-some-writeable-directories">Create some Writeable Directories</h2>
+
+<p>The next problem is, that you do not have permissions to write to <code class="highlighter-rouge">/etc</code>, which you need to e.g. create SSH host keys etc.
+However, that’s also not a big issue as we have <a href="https://en.wikipedia.org/wiki/UnionFS">the <code class="highlighter-rouge">unionfs</code> filesystem!</a> :)</p>
+
+<p><a href="https://en.wikipedia.org/wiki/UnionFS">UnionFS</a> will mount a directory as an overlay over another directory.
+Let’s assume you have some space in <code class="highlighter-rouge">$SPACE</code> (maybe in the ZPool that you just mounted or on another USB drive), then you can just create a few directories:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">mkdir <span class="nv">$SPACE</span>/<span class="o">{</span>etc,var,usr,tmp<span class="o">}</span></code></pre></figure>
+
+<p>and mount it as <code class="highlighter-rouge">unionfs</code> to the root’s equivalents:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">mount_unionfs <span class="nv">$SPACE</span>/etc /etc
+mount_unionfs <span class="nv">$SPACE</span>/var /var
+mount_unionfs <span class="nv">$SPACE</span>/usr /usr
+mount_unionfs <span class="nv">$SPACE</span>/tmp /tmp</code></pre></figure>
+
+<p>Now we can write to <code class="highlighter-rouge">/etc</code>, while the actual changes will be written to <code class="highlighter-rouge">$SPACE/etc</code>! Isn’t that a great invention?</p>
+
+<h2 id="start-the-ssh-service">Start the SSH service</h2>
+
+<p>Now that <code class="highlighter-rouge">/etc</code> is writable we can start caring about the SSH daemon.
+First, we need to configure it to allow root to login.
+Add the follwing line to the <code class="highlighter-rouge">/etc/ssh/sshd_config</code>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">PermitRootLogin yes</code></pre></figure>
+
+<p>Then, we can start the ssh daemon using:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">service sshd onestart</code></pre></figure>
+
+<p>It will automatically create host keys and all the necessary things for a first start of SSH.
+If that was successful, port <code class="highlighter-rouge">22</code> should now be open:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># sockstat -4 -l</span>
+USER     COMMAND    PID   FD PROTO  LOCAL ADDRESS         FOREIGN ADDRESS
+root     sshd       938   4  tcp4   <span class="k">*</span>:22                  <span class="k">*</span>:<span class="k">*</span>
+root     syslogd    542   7  udp4   <span class="k">*</span>:514                 <span class="k">*</span>:<span class="k">*</span></code></pre></figure>
+
+<h2 id="set-root-password">Set root Password</h2>
+
+<p>To be able to login you of course need to set a root password:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">passwd root</code></pre></figure>
+
+<p>Aftwerwards, you should be able to login through SSH from any other machine. Go ahaed and give it a try!</p>
+
+<h2 id="install-and-run-rsync">Install and Run rsync</h2>
+
+<p>Almost there, but the freeBSD live image doesn’t come with <code class="highlighter-rouge">rsync</code> installed.
+So we need to do it manually:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">pkg install rsync</code></pre></figure>
+
+<p>This will first tell us that not even <code class="highlighter-rouge">pkg</code> is installed, but answering the question with <code class="highlighter-rouge">y</code> it will automatically install itself.
+And as everything is mounted as UnionFS, the stuff will actually be installed to <code class="highlighter-rouge">$SPACE/...</code> instead of <code class="highlighter-rouge">/</code>.
+However, you should now be able to do the rsync job from where ever you want :)</p>
+
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    8th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2016/12/08/warning-sector-32-is-already-in-use-by-the-program-flexnet/">Sector 32 is already in use by the program `FlexNet'</a>
+  </h2>
+
+  <div>
+    <p>Just tried to install <a href="https://www.gnu.org/software/grub/">Grub</a> on a <a href="https://wiki.debian.org/Debootstrap">debootstrap</a>‘ed hard drive, but Grub complained:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Installing <span class="k">for </span>i386-pc platform.
+grub-install: warning: Sector 32 is already <span class="k">in </span>use by the program <span class="s1">'FlexNet'</span>; avoiding it.  This software may cause boot or other problems <span class="k">in </span>future.  Please ask its authors not to store data <span class="k">in </span>the boot track.</code></pre></figure>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/drm-inchains.png" title="DRM is bugging us" target="_blank" data-lightbox="/2016/12/08/warning-sector-32-is-already-in-use-by-the-program-flexnet/2016/12/08/warning-sector-32-is-already-in-use-by-the-program-flexnet/" data-title="DRM is bugging us! Image by Brendan Mruk and Matt Lee, shared under CC BY-SA 3.0" class="link-noborder">
+    
+        <img src="index_files/drm-inchains.png" alt="DRM is bugging us" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>DRM is bugging us! Image by Brendan Mruk and Matt Lee, shared under CC BY-SA 3.0</figcaption>
+    
+    </figure>
+</div>
+
+<p>Never heard of that <a href="https://en.wikipedia.org/wiki/FlexNet_Publisher">FlexNet</a> thing, but according to Wikipedia it’s a <em>software license manager</em>.
+And we all know how this whole DRM thing just bugs us..
+So it bugged me because the new system wouldn’t boot properly..
+Other people having <a href="http://www.chiark.greenend.org.uk/%7Ecjwatson/blog/windows-applications-making-grub2-unbootable.html">similar</a> <a href="https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/441941">problems</a>.</p>
+
+<p>However, it seems impossible to force grub overriding this sector, but you may wipe it manually.
+In my case sector 32 was <strong>infected by DRM</strong>, so I did the following:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/sda <span class="nv">bs</span><span class="o">=</span>512 <span class="nv">count</span><span class="o">=</span>1 <span class="nv">seek</span><span class="o">=</span>32</code></pre></figure>
+
+<p>If that’s done Grub installs like a charm,
+the system booted again,
+and the admin was happy that another DRM thing died :)</p>
+
+<p><small>
+The figure I used in this article was made by <a href="http://drm.info/">Brendan Mruk and Matt Lee</a>. They share it as <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.
+</small></p>
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    3rd,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2016/12/03/handy-docker-tools/">Handy Docker Tools</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/docker-toolbox.svg" title="Handy Docker Tools" target="_blank" data-lightbox="/2016/12/03/handy-docker-tools/2016/12/03/handy-docker-tools/" data-title="Docker Tools" class="link-noborder">
+    
+        <img src="index_files/docker-toolbox.png" alt="Handy Docker Tools" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Docker Tools</figcaption>
+    
+    </figure>
+</div>
+
+<p>As I’m working with <a href="https://www.docker.com/">Docker</a> quite intensively it was about time to develop some tools that help me managing different tasks.
+Some of them have already been existing as functions in my environment or something, but now they are assembled in <a href="https://github.com/binfalse/docker-tools">a git repository at GitHub</a>.</p>
+
+<p>The toolbox currently consists of the following tools:.</p>
+
+<h2 id="dclean-cleans-your-setup">dclean cleans your setup</h2>
+
+<p>The Docker-Clean tool <code class="highlighter-rouge">dclean</code> helps getting rid of old, exited Docker containers.
+Sometimes I forget the <code class="highlighter-rouge">--rm</code> flag during tests, and when I realise it there are already hundreds of orhpaned containers hanging around..
+Running <code class="highlighter-rouge">dclean</code> without arguments removes all of them quickly.</p>
+
+<p>Additionally, the <code class="highlighter-rouge">dclean</code> tool accepts a <code class="highlighter-rouge">-i</code> flag which will clean the images.
+It will prune all dangling images.
+Dangling images are orphaned and usually not needed anymore.
+Thus, <code class="highlighter-rouge">dclean -i</code> will remove them.</p>
+
+<h2 id="denter-gets-you-into-a-containers">denter gets you into a containers</h2>
+
+<p>The Docker-Enter tool <code class="highlighter-rouge">denter</code> beames you into a running Docker container.
+Just provide the container’s name or CID as an argument to get a <code class="highlighter-rouge">/bin/bash</code> inside the container.
+Internally, <code class="highlighter-rouge">denter</code> will just call</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> -it <span class="s2">"</span><span class="nv">$NAME</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$EXEC</span><span class="s2">"</span></code></pre></figure>
+
+<p>with <code class="highlighter-rouge">$EXEC</code> being <code class="highlighter-rouge">/bin/bash</code> by default.
+So there is no magic, it’s just a shortcut..
+You may overwrite the program to be executed by providing it as a second argument.
+That means,</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">denter SOMEID ps -ef</code></pre></figure>
+
+<p>will execute <code class="highlighter-rouge">ps -ef</code> in the container with the id <code class="highlighter-rouge">SOMEID</code>.</p>
+
+<h2 id="dip-shows-ip-addresses">dip shows IP addresses</h2>
+
+<p>The Docker-IP tool <code class="highlighter-rouge">dip</code> shows the IP addresses of running containers.
+Without arguments it will print the IP addresses, names, and container ids of all running containers.
+If your interested in the IP address of a specific container you may pass that container’s CID as an argument with <code class="highlighter-rouge">-c</code>, just like:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">dip -c SOMEID</code></pre></figure>
+
+<p>This will show the IP of the container with id <code class="highlighter-rouge">SOMEID</code>.</p>
+
+<h2 id="dkill-stops-all-running-containers">dkill stops all running containers</h2>
+
+<p>The Docker-Kill tool <code class="highlighter-rouge">dkill</code> is able to kill all running containers.
+It doesn’t care what’s in the container, it will just iterate over the <code class="highlighter-rouge">docker ps</code> list to stop all running containers.</p>
+
+<p>As this is quite dangerous, it requires a <code class="highlighter-rouge">-f</code> flag to actually kill the containers.
+You may afterwards run the <a href="#dclean-cleans-your-setup"><code class="highlighter-rouge">dclean</code> tool</a> from above to get rid of the cadavers..</p>
+
+<h2 id="dupdate-updates-images">dupdate updates images</h2>
+
+<p>The Docker-Update tool <code class="highlighter-rouge">dupdate</code>
+ helps you staying up-to-date.
+It will iterate over all your images and tries to pull new versions of 
+that image from the Docker registry (or your own registry, if you have 
+one).
+By default, it will <em>echo</em> the images that have been updates and tells you which images cannot be found (anymore) on the registry.
+You may pass the <code class="highlighter-rouge">-v</code> to <code class="highlighter-rouge">dupdate</code> to enable <em>verbose mode</em> and also get a report for images that do not have a newer version at the registry.
+This way, you can make sure that all images are checked.
+Similarly, you can pass <code class="highlighter-rouge">-s</code> to enable <em>silent mode</em> and suppress messages about images that cannot be found at the registry.</p>
+
+<p>You may also want to look at the <a href="https://binfalse.de/2017/01/24/automatically-update-docker-images/">Docker-Update tool?</a></p>
+
+<h1 id="installation">Installation</h1>
+
+<p>Installing the tools is very easy:
+Just clone the <a href="https://github.com/binfalse/docker-tools">Docker-Tools git repository at GitHub</a>.
+If you’re using a Debian based system you may also install the tools <a href="https://binfalse.de/software/apt-repo/">through my apt-repository</a>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">aptitude install bf-docker-tools</code></pre></figure>
+
+<p>This way, you’ll stay up-to-date with bug fixes etc.</p>
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    2nd,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2016/12/02/firefox-mute-media/">Firefox: Mute Media</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2017/mute-tube.svg" title="Silence Firefox" target="_blank" data-lightbox="/2016/12/02/firefox-mute-media/2016/12/02/firefox-mute-media/" data-title="Silence Firefox" class="link-noborder">
+    
+        <img src="index_files/mute-tube.png" alt="Silence Firefox" style="max-width:200px">
+    
+    </a>
+    
+    
+        <figcaption>Silence Firefox</figcaption>
+    
+    </figure>
+</div>
+
+<p>You middle-click a few youtube videos and all start shouting against each other.
+You enter a website and it immediately slaps sound in you face.
+How annoying…</p>
+
+<p>But there may be help.</p>
+
+<p>Enter <code class="highlighter-rouge">about:config</code> and set</p>
+
+<ul>
+  <li><code class="highlighter-rouge">media.block-play-until-visible</code> to <code class="highlighter-rouge">true</code> to only play media that is also in the current tab an do not play the stuff from the background</li>
+  <li><code class="highlighter-rouge">media.autoplay.enabled</code> to <code class="highlighter-rouge">false</code> to stop autoplaying of some of the media (doens’t work everywhere, not sure why..)</li>
+  <li><code class="highlighter-rouge">dom.audiochannel.mutedByDefault</code> sets the audio muted by default – essential for offices</li>
+  <li><code class="highlighter-rouge">plugins.click_to_play</code> requires a click to run plugins, such as flash (which you are anyway not using!)</li>
+</ul>
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    November
+    27th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/">Fix highlight colors for QT apps on a GTK desktop</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/okular-highlight-default.png" title="Okular: highlighted text is hardly readable" target="_blank" data-lightbox="/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/" data-title="Okular: highlighted text is hardly readable" class="link-noborder">
+    
+        <img src="index_files/okular-highlight-default.png" alt="Okular: highlighted text is hardly readable" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Okular: highlighted text is hardly readable</figcaption>
+    
+    </figure>
+</div>
+
+<p>I’m using the <a href="https://i3wm.org/">i3 window manger</a>.
+As smart as possible, increases productivity, and feels clean.
+Exactly how I like my desktop.
+I’m still very happy that <a href="https://meet-unix.org/">Uschy</a> hinted me towards i3!</p>
+
+<p>However, I’m experiencing a problem with highlighted text in <a href="https://okular.kde.org/">Okular</a>, my preferred PDF viewer.
+When I highlight something in Okular the highlight-color (blue) is far too dark, the highlighted text isn’t readable anymore.
+I used to live with that, but it was quite annoying.
+Especially when you’re in a meeting/presentation and you want to highlight something at the projector.
+I just saw that problem occurring in Okular.
+Not sure why, but I honestly do not understand this whole desktop config thing – probably one of the reasons why <strong>I love i3</strong> ;-)</p>
+
+<p>Today, I eventually digged into the issue and found out <del>what’s the problem</del> how to solve the problem.
+Apparently, Okular uses a Qt configuration, that can be modified using the <code class="highlighter-rouge">qtconfig</code> tool.
+Just install it (here for Qt4 applications):</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/qtconfig-highlighted.png" title="Configure the highlight color using the qtconfig tool" target="_blank" data-lightbox="/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/" data-title="Configure the highlight color using the qtconfig tool" class="link-noborder">
+    
+        <img src="index_files/qtconfig-highlighted.png" alt="Configure the highlight color using the qtconfig tool" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Configure the highlight color using the qtconfig tool</figcaption>
+    
+    </figure>
+</div>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">aptitude install qt4-qtconfig</code></pre></figure>
+
+<p>When you run <code class="highlighter-rouge">qt4-qtconfig</code> a window will pop up, as you can see in the figure on the right:</p>
+
+<ol>
+  <li>Select a <em>GUI Style</em> that is <strong>not</strong> <em>Desktop Settings (Default)</em>, e.g. <em>Cleanlooks</em>.</li>
+  <li>Then you can click the <em>Tune Palette…</em> button in the <em>Build Palette</em> section.</li>
+  <li>A second window will pop up. Select <em>Highlight</em> in the <em>Central color roles</em> section.</li>
+  <li>Finally you’re good to select the hightlight color using the color chooser button! :)</li>
+</ol>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/okular-highlight-fixed.png" title="Okular highlighting text with fixed colors" target="_blank" data-lightbox="/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/2016/11/27/fix-highlight-colors-for-qt-apps-on-a-gtk-desktop/" data-title="Okular highlighting text with fixed colors" class="link-noborder">
+    
+        <img src="index_files/okular-highlight-fixed.png" alt="Okular highlighting text with fixed colors" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Okular highlighting text with fixed colors</figcaption>
+    
+    </figure>
+</div>
+
+<p>Was a bit difficult to find, but the result is worth it!
+The figure on the bottom shows the new highlight color – much better.</p>
+
+<p>I will probably never understand all these KDE, QT, Gnome, GTK, blah settings.
+Every environment does it differently and changes the configuration format and location like every few months.
+At least for me that’s quite frustrating…</p>
+
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    November
+    25th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2016/11/25/mail-support-for-docker-s-php-fpm/">Mail support for Docker's php:fpm</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/docker-mail-delivery.svg" title="Sending Mails from within a Docker Container" target="_blank" data-lightbox="/2016/11/25/mail-support-for-docker-s-php-fpm/2016/11/25/mail-support-for-docker-s-php-fpm/" data-title="Sending Mails from within a Docker Container" class="link-noborder">
+    
+        <img src="index_files/docker-mail-delivery.png" alt="Sending Mails from within a Docker Container" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Sending Mails from within a Docker Container</figcaption>
+    
+    </figure>
+</div>
+
+<p>Dockerizing everything is fun and gives rise to sooo many ideas and opportunities.
+However, sometimes it’s also annoying as ….
+For example, I just tried to use a Docker container for a PHP application that sends emails.
+Usually, if your server is configured ok-ish, it works out of the box and I never had problems with something like that.</p>
+
+<h2 id="the-issue">The Issue</h2>
+
+<p>In times of Docker there is just one application per container.
+That means the PHP container doesn’t know anything about emailing.
+Even worse, the configuration tool that comes with PHP tries configuring the <code class="highlighter-rouge">sendmail_path</code> to something like <code class="highlighter-rouge">$SENDMAILBINARY -t -i</code>.
+That obviously fails, because there is no sendmail binary and <code class="highlighter-rouge">$SENDMAILBINARY</code> remains empty, thus the actual setting becomes:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">sendmail_path <span class="o">=</span> <span class="s2">" -t -i"</span></code></pre></figure>
+
+<p>That, in turn, leads to absurd messages in your log files, because there is no such binary as <code class="highlighter-rouge">-t</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>WARNING: [pool www] child 7 said into stderr: "sh: 1: -t: not found"
+</code></pre>
+</div>
+
+<p>Hard times to start debugging that issue..</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>To solve this problem I <em>forked</em> the <a href="https://hub.docker.com/_/php/">php:fpm</a> image to install <a href="https://packages.qa.debian.org/s/ssmtp.html">sSMTP</a>, a very simple <a href="https://en.wikipedia.org/wiki/Message_transfer_agent">MTA</a> that is able to deliver mail to a mail hub.
+Afterwards I needed to configure the sSMTP as well as the PHP mail setup.</p>
+
+<h3 id="install-ssmtp-into-phpfpm">Install sSMTP into php:fpm</h3>
+
+<p>Nothing easier than that, just create a Dockerfile based on php:fpm and install sSMTP through apt:</p>
+
+<figure class="highlight"><pre><code class="language-dockerfile" data-lang="dockerfile">FROM php:fpm
+MAINTAINER martin scharm &lt;https://binfalse.de&gt;
+
+# Install sSMTP for mail support
+RUN apt-get update \
+	&amp;&amp; apt-get install -y -q --no-install-recommends \
+		ssmtp \
+	&amp;&amp; apt-get clean \
+	&amp;&amp; rm -r /var/lib/apt/lists/*</code></pre></figure>
+
+<p>Docker-build that image either through command line or using <a href="https://www.docker.com/products/docker-compose">Docker Compose</a> or whatever is your workflow.
+For this example, let’s call this image <a href="https://hub.docker.com/r/binfalse/php-fpm-extended/">binfalse/php-fpm-extended</a>.</p>
+
+<h3 id="setup-for-the-ssmtp">Setup for the sSMTP</h3>
+
+<p>Configuring the sSMTP is easy.
+Basically, all you need to do is to specify the address to the mail hub using the <code class="highlighter-rouge">mailhub</code> option.
+However, as my mail server is running on a different physical server I also want to enable encryption, so I set <code class="highlighter-rouge">UseTLS</code> and <code class="highlighter-rouge">UseSTARTTLS</code> to <code class="highlighter-rouge">YES</code>.
+Docker containers usually get cryptic names, so I reset the hostname using the <code class="highlighter-rouge">hostname</code> variable.
+And last but not least I allowed the applications to overwrite of the <em>From</em> field in emails using the <code class="highlighter-rouge">FromLineOverride</code>.
+Finally, your full configuration may look like:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">FromLineOverride</span><span class="o">=</span>YES
+<span class="nv">mailhub</span><span class="o">=</span>mail.server.tld
+<span class="nv">hostname</span><span class="o">=</span>php-fpm.yourdomain.tld
+<span class="nv">UseTLS</span><span class="o">=</span>YES
+<span class="nv">UseSTARTTLS</span><span class="o">=</span>YES</code></pre></figure>
+
+<p>Just store that in a file, e.g. <code class="highlighter-rouge">/path/to/ssmtp.conf</code>. We’ll mount that into the container later on.</p>
+
+<h3 id="configure-mail-for-phpfpm">Configure mail for php:fpm</h3>
+
+<p>Even if we installed the sSMTP the PHP configuration is still invalid, we need to set the <code class="highlighter-rouge">sendmail_path</code> correctly.
+That’s actually super easy, just create a file containing the following lines:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>mail <span class="k">function</span><span class="o">]</span>
+sendmail_path <span class="o">=</span> <span class="s2">"/usr/sbin/ssmtp -t"</span></code></pre></figure>
+
+<p>Save it as <code class="highlighter-rouge">/path/to/php-mail.conf</code> to mount it into the container later on.</p>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<p>To run it, you would need to mount the following things:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">/path/to/php-mail.conf</code> to <code class="highlighter-rouge">/usr/local/etc/php/conf.d/mail.ini</code></li>
+  <li><code class="highlighter-rouge">/path/to/ssmtp.conf</code> to <code class="highlighter-rouge">/etc/ssmtp/ssmtp.conf</code></li>
+  <li>your PHP scripts to wherever your sources are expected..</li>
+</ul>
+
+<p>Thus a Docker Compose configuration may look like:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">fpm:
+	restart: always
+	image: binfalse/php-fpm-extended
+	volumes:
+		<span class="c"># CONFIG</span>
+		- /path/to/ssmtp.conf:/etc/ssmtp/ssmtp.conf:ro
+		- /path/to/php-mail.conf:/usr/local/etc/php/conf.d/mail.ini:ro
+		<span class="c"># PHP scripts</span>
+		- /path/to/scripts:/scripts/:ro
+	logging:
+		driver: syslog
+		options:
+			tag: docker/fpm</code></pre></figure>
+
+<p>Give it a try and let me know if that doesn’t work!</p>
+
+<h2 id="links">Links</h2>
+
+<p>Docker resources:</p>
+
+<ul>
+  <li><a href="https://www.docker.com/">Docker</a></li>
+  <li><a href="https://www.docker.com/products/docker-compose">Docker Compose</a></li>
+  <li><a href="https://hub.docker.com/r/binfalse/php-fpm-extended/">My binfalse/php-fpm-extended extended</a> (entailed for my needs, e.g. also includes MySQL)</li>
+  <li><a href="https://github.com/binfalse/docker-php-fpm-extended">My Dockerfile in a Git repository at GitHub</a></li>
+  <li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a></li>
+</ul>
+
+<p>Some sSMTP resources that helped me configuring things:</p>
+
+<ul>
+  <li><a href="https://wiki.archlinux.org/index.php/SSMTP">https://wiki.archlinux.org/index.php/SSMTP</a></li>
+  <li><a href="https://wiki.debian.org/sSMTP">https://wiki.debian.org/sSMTP</a></li>
+</ul>
+
+
+  </div>
+
+</article>
+
+<article class="home">
+
+  <span class="post-date">
+    
+    September
+    25th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="https://binfalse.de/2016/09/25/thunderbird-opens-multiple-windows-on-startup/">Thunderbird opens multiple windows on startup</a>
+  </h2>
+
+  <div>
+    <!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/thunderbird-attention.png" title="Thunderbird demands attention..." target="_blank" data-lightbox="/2016/09/25/thunderbird-opens-multiple-windows-on-startup/2016/09/25/thunderbird-opens-multiple-windows-on-startup/" data-title="Thunderbird demands attention... (Screenshot of my i3 desktop)" class="link-noborder">
+    
+        <img src="index_files/thunderbird-attention.png" alt="Thunderbird demands attention..." style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Thunderbird demands attention... (Screenshot of my i3 desktop)</figcaption>
+    
+    </figure>
+</div>
+
+<p>Since some time my <a href="https://en.wikipedia.org/wiki/Mozilla_software_rebranded_by_Debian">Icedove/Thunderbird</a> (currently version 38.8.0) uses to open two main windows when I launch it.
+That’s a bit annoying, as there are always two windows visually trying to catch my attention.
+Even if I read the new mail in one of them the other one would still demand attention.</p>
+
+<p>That’s of course a bit annoying.
+The preferences dialog doesn’t seem to offer a button for that.
+I’ve been looking for a solution on the internet, but wasn’t able to find something.
+And unfortunately, there is an easy workaround: Just close the second window after startup…
+The other window will appear again with the next start of Icedove/Thunderbird, but that’s the problem of future-me.
+These nasty easy workarounds!
+You won’t fix the problem and it tends to bug you a little harder with every appearance.</p>
+
+<p>Today I had some time to look into the issue.</p>
+
+<p>I sensed the problem in my Thunderbird settings - if that would be an
+ actual Thunderbird issue I would have found something on the internet..
+Thus, it must be in my <code class="highlighter-rouge">~/.icedove/XXXX.default</code> directory.
+Studying the <code class="highlighter-rouge">prefs.js</code> file was quite interesting, but didn’t reveal anything useful for the current issue.
+Then I spotted a <code class="highlighter-rouge">session.json</code> file, and it turns out that this caused the problem!
+It contained these lines: <code class="highlighter-rouge">cat session.json | json_pp</code></p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+	</span><span class="nt">"windows"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"3pane"</span><span class="p">,</span><span class="w">
+		</span><span class="nt">"tabs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nt">"selectedIndex"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+			</span><span class="nt">"rev"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+			</span><span class="nt">"tabs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"selectedIndex"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"rev"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"tabs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+				</span><span class="p">{</span><span class="w">
+					</span><span class="err">....</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+				</span><span class="p">]</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+			</span><span class="p">]</span><span class="w">
+		</span><span class="p">}</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="p">{</span><span class="w">
+		</span><span class="nt">"tabs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nt">"tabs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="err">....</span><span class="w">
+			</span><span class="p">},</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"mode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"tasks"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"ext"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+				</span><span class="nt">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nt">"background"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+			</span><span class="p">},</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"ext"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+				</span><span class="nt">"mode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"calendar"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nt">"background"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+			</span><span class="p">},</span><span class="w">
+			</span><span class="p">{</span><span class="w">
+				</span><span class="nt">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nt">"messageURI"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"imap-message://someidentifyer/INBOX#anotheridentifier"</span><span class="w">
+				</span><span class="p">},</span><span class="w">
+				</span><span class="nt">"mode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"message"</span><span class="p">,</span><span class="w">
+				</span><span class="nt">"ext"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+			</span><span class="p">],</span><span class="w">
+			</span><span class="nt">"rev"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+			</span><span class="nt">"selectedIndex"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+		</span><span class="p">},</span><span class="w">
+		</span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"3pane"</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+	</span><span class="p">],</span><span class="w">
+	</span><span class="nt">"rev"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p><small>(For brevity I replaced my actual main tab’s content with <code class="highlighter-rouge">....</code>)</small></p>
+
+<p>As you see, there is <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> object containing a single key <code class="highlighter-rouge">windows</code> with an array of two objects.
+These two objects apparently represent my two windows.
+Both have tabs.
+For example in the second window object my <code class="highlighter-rouge">calendar</code> and my <code class="highlighter-rouge">tasks</code> are opened in tabs (that’s the <a href="https://en.wikipedia.org/wiki/Lightning_%28software%29">lightning/iceowl extension</a>), and a single message occupies another tab.</p>
+
+<p>Brave as I am I just deleted the first window object (I decided for the first one as that had no extra tabs).
+And voilà!
+The next launch of Thunderbird just opens a single window! :)</p>
+
+<p>I don’t know who wrote the stuff into the <code class="highlighter-rouge">session.json</code>, it was probably caused by one of my extensions.
+However, it seems to be stable now.
+And if it ever happens again I’ll know how to fix it.</p>
+
+<p>Easy solution, should have fixed that immediately!</p>
+
+<h2 id="update">Update</h2>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper alignright">
+    <figure>
+    
+    <a href="https://binfalse.de/assets/media/pics/2016/thunderbird-attention-firetray-options.png" title="Fix the settings in FireTray" target="_blank" data-lightbox="/2016/09/25/thunderbird-opens-multiple-windows-on-startup/2016/09/25/thunderbird-opens-multiple-windows-on-startup/" data-title="Fix the settings in FireTray (version 0.6.1)" class="link-noborder">
+    
+        <img src="index_files/thunderbird-attention-firetray-options.png" alt="Fix the settings in FireTray" style="max-width:300px">
+    
+    </a>
+    
+    
+        <figcaption>Fix the settings in FireTray (version 0.6.1)</figcaption>
+    
+    </figure>
+</div>
+
+<p>I found out what caused the problem: It is <a href="https://addons.mozilla.org/en-US/thunderbird/addon/firetray/">FireTray</a> – an extension that I’m using to have a systray notification icon.
+This extension sits in the systray and changes its icon when a new mail arrives.
+That’s super useful, but…
+<strong>by default it doesn’t close windows but just hides them to systray!</strong>
+That means you can restore them in the context menu of the systray icon…
+And that means that the windows aren’t really closed and will appear again with the next start of the application.</p>
+
+<p>To change that behaviour just right-click the icon and click <em>Preferences.</em>
+A dialog window will pop up and you just need to unselect the <em>Closing window hides to systray.</em>
+Compare the screenshot.
+You may also go for <em>Only last window can be hidden.</em></p>
+
+
+  </div>
+
+</article>
+
+<hr>
+
+<ul class="pager"> 
+
+  
+  <li class="previous disabled">
+    <a>← Newer</a>
+  </li>
+  
+  
+  <li>
+    <span class="page_number">Page: 1 of 19</span>
+  </li>
+
+  
+  <li class="next">
+    <a href="https://binfalse.de/page2">Older →</a>
+  </li>
+  
+
+</ul>
+
+
+
+
+		<footer>
+			<hr>
+			<p>
+				Copyright © 2009-2017  <a href="https://binfalse.de/">Martin Scharm</a>. Powered by <a href="http://jekyllrb.com/">Jekyll</a>. 
+				<br>
+				This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="index_files/bootstrap.js"></script>
+	<script type="text/javascript" src="index_files/app.js"></script>
+
+
+
+<div style="display: none;" id="lightboxOverlay" class="lightboxOverlay"></div><div style="display: none;" id="lightbox" class="lightbox"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="><div class="lb-nav"><a class="lb-prev" href=""></a><a class="lb-next" href=""></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div></body></html>
