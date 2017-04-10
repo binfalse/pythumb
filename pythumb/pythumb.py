@@ -161,6 +161,22 @@ def thumb_from_image (orginal_file, preview_file):
 	return True
 
 
+# convert to PDF and do the pdf conversion
+def thumb_from_postscript (orginal_file, preview_file):
+	log.info ("generating thumbnail with ps2pdf for " + orginal_file)
+	with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
+		cmd = ["ps2pdf", orginal_file, temp.name]	
+		
+		log.debug ("executing " + str (cmd))
+		return_code = subprocess.call(cmd)
+		
+		if return_code != 0:
+			log.error ("error converting: " + orginal_file + " to " + temp.name + " -- command was: " + str (cmd) + "\n")
+			return False
+		return thumb_from_image (temp.name + "[0]", preview_file)
+	return False
+
+
 # extract an image from a zip file (eg. epub) and create a thumbnail from it
 def _thumb_from_zipped_image (zipContainer, path, preview_file):
 	log.debug ("creating thumb from zipped image:" + path)
@@ -314,16 +330,22 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 	mime = m.file (orginal_file)
 	log.debug ("mime: " + mime)
 	
+	# pdf like document? -> image magic...
+	if any (option in mime for option in ['application/pdf', 'djvu']):
+		log.debug ("is pdf like")
+		if thumb_from_image (orginal_file + "[0]", preview_file):
+			return True
+	
 	# is that an image? -> just use image magic...
 	if 'image/' in mime:
 		log.debug ("is an image")
 		if thumb_from_image (orginal_file, preview_file):
 			return True
 	
-	# pdf like document? -> image magic...
-	if any (option in mime for option in ['application/pdf', 'application/postscript', 'djvu']):
+	# ps document? -> convert to pdf and do the pdf tricks
+	if 'application/postscript' in mime:
 		log.debug ("is pdf like")
-		if thumb_from_image (orginal_file + "[0]", preview_file):
+		if thumb_from_postscript (orginal_file, preview_file):
 			return True
 	
 	# epub? -> extract image if possible

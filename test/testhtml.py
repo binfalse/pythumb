@@ -17,7 +17,7 @@ class TestHtml (unittest.TestCase):
 	def test_one (self):
 			f = "test/files/html-1/index.html"
 			self.assertTrue (os.path.exists (f), "cannot find " + f)
-			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
+			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)

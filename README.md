@@ -9,3 +9,4 @@ It is intented to run as a Docker container, as it has many dependencies...
 * cutycapt
 * libre office
 * image magic
+* ps2pdf

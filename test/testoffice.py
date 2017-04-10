@@ -17,7 +17,7 @@ class TestOffice (unittest.TestCase):
 	def test_one (self):
 			f = "test/files/office-1.doc"
 			self.assertTrue (os.path.exists (f), "cannot find " + f)
-			with tempfile.NamedTemporaryFile (suffix='.png'e) as temp:
+			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
 				check_thumbnail (self, temp.name)
