@@ -9,22 +9,13 @@ import logging
 from PIL import Image
 from testhelpers import check_thumbnail
 
-# unittest ref:
-# https://docs.python.org/2/library/unittest.html#test-cases
-
-#logging.basicConfig()
-#log = logging.getLogger("pythumb.pythumb")
-#log.setLevel(logging.DEBUG)
 
 
-#log = logging.getLogger(__name__)
-#log.setLevel(logging.DEBUG)
-
-# test the epub files
-class TestEpub (unittest.TestCase):
+# test image files
+class TestImage (unittest.TestCase):
 	
 	def test_one (self):
-			f = "test/files/book-1.epub"
+			f = "test/files/image-3.png"
 			self.assertTrue (os.path.exists (f), "cannot find first epub")
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
@@ -32,25 +23,27 @@ class TestEpub (unittest.TestCase):
 				check_thumbnail (self, temp.name)
 	
 	def test_two (self):
-			f = "test/files/book-2.epub"
+			f = "test/files/image-4.svg"
 			self.assertTrue (os.path.exists (f), "cannot find first epub")
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from epub")
 				check_thumbnail (self, temp.name)
 	
-	def test_set_size (self):
-			f = "test/files/book-1.epub"
+	def test_three (self):
+			f = "test/files/image-2.jpg"
 			self.assertTrue (os.path.exists (f), "cannot find first epub")
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
-				pythumb.set_thumb_dimensions (50, 50)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from epub")
-				# restore original dimensions
-				pythumb.set_thumb_dimensions (pythumb.default_thumb_width, pythumb.default_thumb_height)
 				check_thumbnail (self, temp.name)
-				# extra checks for smaller thumbnail
-				with Image.open (temp.name) as img:
-					self.assertTrue (img.size[0] <= 50, "thumb width is unexpectedly large: " + str (img.size[0]) + "!?")
-					self.assertTrue (img.size[1] <= 50, "thumb height is unexpectedly large: " + str (img.size[1]) + "!?")
+	
+	def test_four (self):
+			f = "test/files/image-1.jpeg"
+			self.assertTrue (os.path.exists (f), "cannot find first epub")
+			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+				os.remove (temp.name)
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from epub")
+				check_thumbnail (self, temp.name)
+
 

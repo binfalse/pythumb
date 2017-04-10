@@ -303,7 +303,7 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 			return True
 	
 	# office document?
-	if any (option in mime for option in ['application/msword', 'application/vnd.ms-', 'application/vnd.oasis.opendocument.']):
+	if any (option in mime for option in ['application/msword', 'application/vnd.ms-', 'application/vnd.oasis.opendocument.', 'application/vnd.openxmlformats-officedocument.']):
 		log.debug ("is office doc")
 		if thumb_from_office_doc (orginal_file, preview_file):
 			return True
