@@ -14,6 +14,7 @@ import sys
 import magic
 import zipfile
 import logging
+import textwrap
 from StringIO import StringIO
 
 log = logging.getLogger(__name__)
@@ -57,39 +58,60 @@ def set_overwrite_thumb (boolean):
 
 
 
-
 # generate a thumbnail file displaying just the file name
 # this should be the last resort, if we cannot create a better thumbnail from the data
 def thumb_from_name (name, preview_file):
 	# shorten the name to fit into the image
-	if len (name) > 30:
-		name = name[:27] + "..."
+	if len (name) > 100:
+		name = name[:95] + ".."
 	
-	log.debug ("drawing title " + name)
-	
-	# start font
-	fontsize = 60
+	fontsize = 26
 	font = ImageFont.truetype ("font.ttf", fontsize)
-	fontBox = font.getsize (name)
 	
-	# decrease font size until the name fits into the image
-	while fontBox[0] > _thumb_width - 20 or fontBox[1] > _thumb_height - 50:
-		fontsize = fontsize - 1
-		font = ImageFont.truetype ("font.ttf", fontsize)
-		fontBox = font.getsize (name)
+	if len (name) > 90:
+		name = textwrap.wrap (name, len (name) / 4)
+	elif len (name) > 60:
+		name = textwrap.wrap (name, len (name) / 3)
+	elif len (name) > 30:
+		name = textwrap.wrap (name, len (name) / 2)
+	else:
+		name = [name]
 	
-	log.debug ("fontsize: " + str (fontsize) + " font box: " + str (fontBox))
+	# calculate image dimensions, depending
+	# on width/height of the tokens
+	lineheight = 0
+	linewidth = 0
 	
-	# calculate the startpoint for the text
-	x = (_thumb_width - fontBox[0]) / 2
-	y = (_thumb_height - fontBox[1]) / 2
-	log.debug ("pos:: " + str (x) + "/" + str (y))
+	for token in name:
+		s = font.getsize (token)
+		if s[0] > linewidth:
+			linewidth = s[0]
+		if s[1] > lineheight:
+			lineheight = s[1]
 	
-	# create the image and draw the text
-	img = Image.new("RGB", (_thumb_width,_thumb_height), (255,255,255))
+	log.debug ("drawing title " + str (name) + " with fontsize: " + str (fontsize))
+	
+	pic_width = linewidth + 20
+	pic_height = (len (name) * (lineheight + 2)) + 20
+	
+	img = Image.new("RGB", (pic_width, pic_height), (255,255,255))
 	draw = ImageDraw.Draw (img)
-	draw.text ((x, y), name, (50, 50, 50), font=font)
-	img.save (preview_file)
+	
+	currentY = (pic_height - (lineheight + 2) * len (name)) / 2 - 2
+	
+	# write all tokens 
+	for token in name:
+		fontBox = font.getsize (token)
+		x = (pic_width - fontBox[0]) / 2
+		y = currentY
+		
+		log.debug ("drawing " + token + " at: " + str (x) + ":" + str(y))
+		draw.text ((x, y), token, (50, 50, 50), font=font)
+		currentY += lineheight + 2
+	
+	with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+		img.save (temp.name)
+		return thumb_from_image (temp.name, preview_file)
 	return True
 
 
