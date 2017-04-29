@@ -366,26 +366,13 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 		if thumb_from_office_doc (orginal_file, preview_file):
 			return True
 		
-		#2 application/msword;
-		#3 application/postscript;
-		#1 application/zip;
-		#2 image/vnd.djvu;
-		#1 image/vnd.dwg;
-		#1 inode/x-empty;
-		#237 text/html;
-		#1 text/plain;
 		
-		
-	#elif ''
-		
-		#image/x-icon
-		#image/gif
-		#text/html
-		#text/plain
-		#application/epub+zip
-		
-		
-		
+	# TODO:
+	# * EPS
+	# * application/zip; -> like eupb?
+	# * image/vnd.dwg;
+	# * text/plain; -> like name but juts the first few words?
+	# * remote websites
 		
 	# no solution so far?
 	log.warn ("don't understand mime " + mime + " from " + orginal_file)
