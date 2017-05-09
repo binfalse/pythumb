@@ -150,7 +150,7 @@ def crop_preview (orginal_file):
 # generate a thumbnail with imagemagick
 def thumb_from_image (orginal_file, preview_file):
 	log.info ("generating thumbnail with imagemagick for " + orginal_file)
-	cmd = ["convert", "-thumbnail", str (_thumb_width) + "x" + str (_thumb_height), "-flatten", orginal_file, preview_file]
+	cmd = ["convert", "-trim", "-thumbnail", str (_thumb_width) + "x" + str (_thumb_height), "-flatten", orginal_file, preview_file]
 	
 	log.debug ("executing " + str (cmd))
 	return_code = subprocess.call(cmd)
@@ -382,6 +382,29 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 	
 	return False
 
+
+
+
+
+# generate a thumbnail from an HTML document
+def thumb_from_website (url, preview_file):
+	log.info ("generating html preview for " + url)
+	
+	# render the page with cutycapt
+	with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+		cmd = ["cutycapt", "--max-wait=15000", "--url=" + url, "--out=" + temp.name]
+		log.debug ("executing " + str (cmd))
+		return_code = subprocess.call (cmd)
+		if return_code != 0:
+			log.error ("error thumbnailing url: " + url + " to " + preview_file + " -- command was " + str (cmd))
+			return False
+		
+		# crop super-long (height) HTML pages, otherwise imagemagick will complain...
+		crop_preview (temp.name)
+		
+		# use imagemagick to create the actual thumbnail
+		return thumb_from_image (temp.name, preview_file)
+	return False
 
 
 

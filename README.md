@@ -14,12 +14,18 @@ It is intented to run as a Docker container, as it has many dependencies...
 
 ## Usage
 
+
 ### As a Library
 
+pythumb 
 
 ### As Executable
 
 
+
+### Through Docker
+
+TODO
 
 ## Running Tests
 
