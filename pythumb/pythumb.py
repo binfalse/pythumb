@@ -37,6 +37,7 @@ _line_color = (80, 80, 80)
 
 _img_ext_regex = re.compile (r'^.*\.(jpg|jpeg|png)$', flags=re.IGNORECASE)
 _cover_regex = re.compile (r'.*cover.*\.(jpg|jpeg|png)', flags=re.IGNORECASE)
+_url_regex = re.compile (r'^https?://', flags=re.IGNORECASE)
 
 
 # DEBUGGING
@@ -272,15 +273,10 @@ def thumb_from_epub (orginal_file, preview_file):
 		
 		return False
 
-
-
-# generate a thumbnail from an HTML document
-def thumb_from_html (orginal_file, preview_file):
-	log.info ("generating html preview for " + orginal_file)
-	
-	# render the page with cutycapt
+def _run_cutycapt (orginal_file, preview_file, max_wait):
+	log.info ("running cutycapt for " + orginal_file)
 	with tempfile.NamedTemporaryFile (suffix='.png') as temp:
-		cmd = ["cutycapt", "--max-wait=1000", "--url=file://" + os.getcwd () + "/" + orginal_file, "--out=" + temp.name]
+		cmd = ["cutycapt", "--max-wait=" + str (max_wait), "--url=" + orginal_file, "--out=" + temp.name]
 		log.debug ("executing " + str (cmd))
 		return_code = subprocess.call (cmd)
 		if return_code != 0:
@@ -293,6 +289,12 @@ def thumb_from_html (orginal_file, preview_file):
 		# use imagemagick to create the actual thumbnail
 		return thumb_from_image (temp.name, preview_file)
 	return False
+
+
+# generate a thumbnail from an HTML document
+def thumb_from_html (orginal_file, preview_file):
+	log.info ("generating html preview for " + orginal_file)
+	return _run_cutycapt ("file://" + os.getcwd () + "/" + orginal_file, preview_file, 1000)
 
 
 # generate a thumbnail from an office file
@@ -389,21 +391,9 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 # generate a thumbnail from an HTML document
 def thumb_from_website (url, preview_file):
 	log.info ("generating html preview for " + url)
-	
-	# render the page with cutycapt
-	with tempfile.NamedTemporaryFile (suffix='.png') as temp:
-		cmd = ["cutycapt", "--max-wait=15000", "--url=" + url, "--out=" + temp.name]
-		log.debug ("executing " + str (cmd))
-		return_code = subprocess.call (cmd)
-		if return_code != 0:
-			log.error ("error thumbnailing url: " + url + " to " + preview_file + " -- command was " + str (cmd))
-			return False
-		
-		# crop super-long (height) HTML pages, otherwise imagemagick will complain...
-		crop_preview (temp.name)
-		
-		# use imagemagick to create the actual thumbnail
-		return thumb_from_image (temp.name, preview_file)
+	if _url_regex.match(url):
+		return _run_cutycapt (url, preview_file, 15000)
+	log.warn ("doesn't seem to be a proper url: " + url)
 	return False
 
 
