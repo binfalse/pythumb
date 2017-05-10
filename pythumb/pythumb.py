@@ -391,7 +391,7 @@ def thumb_from_file (orginal_file, preview_file, orginal_fileName):
 # generate a thumbnail from an HTML document
 def thumb_from_website (url, preview_file):
 	log.info ("generating html preview for " + url)
-	if _url_regex.match(url):
+	if _url_regex.match (url):
 		return _run_cutycapt (url, preview_file, 15000)
 	log.warn ("doesn't seem to be a proper url: " + url)
 	return False

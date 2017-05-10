@@ -4,6 +4,8 @@ This will be a tool to create thumbnails for whatever.. ;-)
 
 It is intented to run as a Docker container, as it has many dependencies...
 
+in PNG format
+
 ## Requirements
 
 * cutycapt
@@ -20,6 +22,20 @@ It is intented to run as a Docker container, as it has many dependencies...
 pythumb 
 
 ### As Executable
+
+
+
+### As a web server
+
+you can run a tiny web server that generates the thumbnails
+
+options:
+
+
+* `--ip` the IP address of the web server. Default is `0.0.0.0`, which will listen to all available address. Use `127.0.0.1` to just listen to localhost.
+
+
+does not support SSL -- use proxies such as nginx
 
 
 
