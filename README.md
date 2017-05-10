@@ -37,7 +37,15 @@ options:
 
 does not support SSL -- use proxies such as nginx
 
+from website:
 
+    curl -v -F target=https://binfalse.de  localhost:12346 > /tmp/thumb.png
+
+from file:
+
+
+
+--max-witdh --max-height
 
 ### Through Docker
 

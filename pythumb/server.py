@@ -5,12 +5,25 @@ import cgi
 import time
 import argparse
 import re
+import os
 import sys
 import pythumb
 import traceback
 import tempfile
+import logging
 from os import curdir, sep
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+
+
+logging.basicConfig()
+log = logging.getLogger("pythumb.pythumb")
+log.setLevel(logging.DEBUG)
+log = logging.getLogger("pythumb")
+log.setLevel(logging.DEBUG)
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+
 
 
 ALLOW_UPLOAD = True
@@ -74,17 +87,43 @@ something went wrong with your upload...
 					if not ALLOW_UPLOAD:
 						self.send_error ("Upload disabled", "This server has the upload mechanism disabled.")
 						return
+					
+					filename = query.get ('filename', 'file')
+					if isinstance (filename, list):
+						filename = filename[0]
+					
+					content = query.get ('file', 'invalid')
+					if isinstance (content, list):
+						content = content[0]
+					
+					if content == 'invalid':
+						self.send_error ("Upload failed", "did not find a file")
+						return
+					
+					
+					with tempfile.NamedTemporaryFile (suffix=filename) as orig:
+						with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+							os.remove (temp.name)
+							with open (orig.name, 'wb') as fh:
+								fh.write (content)
+							
+							if pythumb.thumb_from_file (orig.name, temp.name, filename):
+								self.serve_thumb (temp.name)
+								return
+					self.send_error ("Error generating thumbnail", "there was an error generating the thumbnail", 500)
+					
 					return
 				
 				if _url_regex.match(target):
 					if not ALLOW_REMOTE:
 						self.send_error ("Remote thumbs disabled", "The feature for generating thumbnails of remote websites has been disabled in this server.")
 						return
+					
 					with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 						if pythumb.thumb_from_website (target, temp.name):
 							self.serve_thumb (temp.name)
 							return
-						self.send_error ("Error generating thumbnail", "there was an error generating the thumbnail", 500)
+					self.send_error ("Error generating thumbnail", "there was an error generating the thumbnail", 500)
 				
 				self.send_error ("Invalid request", "do not understand target: " + target)
 				
