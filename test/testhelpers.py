@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # encoding=utf8
 
-from pythumb import pythumb
+#from pythumb.pythumb import PyThumb
 import os
 import logging
 from PIL import Image
-
+from shutil import copyfile
 
 # checks a thumbnail
-def check_thumbnail (tester, thumb):
+def check_thumbnail (tester, thumb, pythumb):
 	tester.assertTrue (os.path.exists (thumb), "did not find preview")
 	size = os.path.getsize (thumb)
 	tester.assertFalse (size < 1000, "thumb size is too small: " + str (size) + "!?")
