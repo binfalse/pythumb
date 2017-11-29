@@ -13,7 +13,7 @@ import tempfile
 import logging
 from os import curdir, sep
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-
+from shutil import copyfile
 
 logging.basicConfig()
 log = logging.getLogger("pythumb.pythumb")
@@ -107,6 +107,8 @@ something went wrong with your upload...
 							with open (orig.name, 'wb') as fh:
 								fh.write (content)
 							
+							copyfile(orig.name, "/tmp/original-upload")
+							
 							if pythumb.thumb_from_file (orig.name, temp.name, filename):
 								self.serve_thumb (temp.name)
 								return
@@ -129,15 +131,8 @@ something went wrong with your upload...
 				
 			else:
 				self.send_error ("Upload failed", "expected multipart/form-data")
-				
-				#upfilecontent = query.get('upfile')
-				#print "filecontent", upfilecontent[0]
-				#self.wfile.write(upfilecontent[0]);
 			
 		except:
-			#e = sys.exc_info()[0]
-			#print (traceback.print_stack())
-			#print (e)
 			tb = traceback.format_exc()
 			print tb
 			self.send_error ("Upload failed", "exception raised")
