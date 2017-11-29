@@ -7,7 +7,7 @@ import argparse
 import re
 import os
 import sys
-import pythumb
+from pythumb import PyThumb
 import traceback
 import tempfile
 import logging
@@ -82,6 +82,9 @@ something went wrong with your upload...
 				if target == 'invalid':
 					self.send_error ("Upload failed", "expected a target")
 					return
+				
+				# create a pythumb instance
+				pythumb = PyThumb ()
 				
 				if target == 'upload':
 					if not ALLOW_UPLOAD:
