@@ -1,13 +1,20 @@
 #!/usr/bin/env python
 # encoding=utf8
 
-from pythumb import pythumb
+# add above dir to lib path
+import sys
+sys.path.append('../pythumb')
+
+from pythumb import PyThumb
 import tempfile
 import os
 
 
-# create thumbnail from a website
+# create pythumb instance
+pythumb = PyThumb ()
 
+
+# create thumbnail from a website
 url = "https://binfalse.de/"
 thumb = "/tmp/pythumb-tmp-web.png"
 
@@ -22,9 +29,8 @@ else:
 
 
 # create thumbnail from file
-
-filename = "test/files/pdflike-2.pdf"
-thum = "/tmp/pythumb-tmp-file.png"
+filename = "../test/files/pdflike-2.pdf"
+thumb = "/tmp/pythumb-tmp-file.png"
 
 if os.path.isfile (thumb):
 	os.remove (thumb)
