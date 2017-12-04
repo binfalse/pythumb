@@ -3,10 +3,12 @@
 
 from pythumb.pythumb import PyThumb
 from testhelpers import TestHelper
+import tempfile
+import os
 
 
-# test image files
-class TestPlain (TestHelper):
+
+class TestStuff (TestHelper):
 	
 	def file_ext_checker (self, pythumb, filename, wo_ext, ext):
 		
@@ -28,6 +30,27 @@ class TestPlain (TestHelper):
 		self.file_ext_checker (pythumb, "/tmp/file.name.tar.gz", "file.name.tar", ".gz")
 		self.file_ext_checker (pythumb, "/tmp/file", "file", "")
 		self.file_ext_checker (pythumb, "/tmp/", "", "")
+		
+	def test_checks (self):
+		pythumb = PyThumb ()
+		with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:
+			
+			# make sure we do not overwrite an existing file
+			f = "test/files/image-1.jpeg"
+			self.assertFalse (pythumb.thumb_from_file (f, temp.name, "testname"), "would overwrite file???")
+			
+			# remove file and make sure it now works
+			os.remove (temp.name)
+			self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "cannot create thumbnail of " + f)
+			
+			
+			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp2:
+				os.remove (temp.name)
+				os.remove (temp2.name)
+				# make sure it fails to generate thumbnail of non-existing file
+				self.assertFalse (pythumb.thumb_from_file (temp.name, temp2.name, "testname"), "how could it create a thumb of a non-existing file?")
+				
+			
 			
 	def test_thumb_dimensions (self):
 		pythumb = PyThumb ()

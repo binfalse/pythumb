@@ -4,7 +4,6 @@
 
 from testhelpers import TestHelper
 
-# test image files
 class TestPlain (TestHelper):
 	
 	def test_one (self):

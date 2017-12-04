@@ -95,6 +95,11 @@ To just run a single test you may just use the default [unittest module](https:/
 
     python -m unittest test.testepub
 
+or call `nosetests` with the test-file as an argument:
+
+    nosetests test/testepub.py
+
+
 This will run all the tests defined in `test/testepub.py`.
 
 
