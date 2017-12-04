@@ -4,7 +4,19 @@ This will be a tool to create thumbnails for whatever.. ;-)
 
 It is intented to run as a Docker container, as it has many dependencies...
 
-in PNG format
+key features:
+* several formats
+* as library or web application
+* docker
+* thus available for multiple languages (not just python!!)
+
+supported formats:
+* zip (will try to find images in the zip and use the one that has 'cover' in its name, or the largest image)
+
+output always in PNG format
+
+
+
 
 ## Requirements
 
@@ -20,6 +32,13 @@ in PNG format
 ### As a Library
 
 pythumb 
+
+general version: thumb from file
+
+
+special functions -> thumb from zip etc
+may fail (return false)
+then use thumb from name
 
 ### As Executable
 

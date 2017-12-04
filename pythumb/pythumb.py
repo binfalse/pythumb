@@ -210,6 +210,8 @@ class PyThumb:
 	def _thumb_from_zipped_image (self, zipContainer, path, preview_file):
 		self.log.debug ("creating thumb from zipped image:" + path)
 		# extract the image
+		
+		# TODO: image extension
 		with tempfile.NamedTemporaryFile () as temp:
 			temp.write (zipContainer.read(path))
 			temp.flush ()
@@ -260,18 +262,18 @@ class PyThumb:
 
 	# this is just a helper function
 	# find an image in the zip file and generate the thumbnail from it
-	def _thumb_from_epub_file_cover (self, epub, preview_file):
+	def _thumb_from_zip_images (self, zippy, preview_file):
 		self.log.debug ("searching for an image in the zip")
 		
 		# images in the zip:
 		candidates = []
 		
 		# iterate images
-		for fileinfo in epub.filelist:
+		for fileinfo in zippy.filelist:
 			# does the image match the cover-file regex?
 			# then we're good to go with that :)
 			if self._cover_regex.match(fileinfo.filename):
-				if self._thumb_from_zipped_image (epub, fileinfo.filename, preview_file):
+				if self._thumb_from_zipped_image (zippy, fileinfo.filename, preview_file):
 					return True
 			
 			# otherwise add it to candidates if it is and image
@@ -280,9 +282,10 @@ class PyThumb:
 		
 		self.log.debug ("found candidates: " + str (candidates))
 		if candidates:
+			# take 'largest' candidate, assuming this is the best picture ;-)
 			candidate = max (candidates, key=lambda f: f.file_size)
 			self.log.debug ("best candidate: " + candidate.filename)
-			return self._thumb_from_zipped_image (epub, candidate.filename, preview_file)
+			return self._thumb_from_zipped_image (zippy, candidate.filename, preview_file)
 		
 		return False
 
@@ -295,13 +298,36 @@ class PyThumb:
 		
 		with zipfile.ZipFile (StringIO (file_url.read ()), "r") as epub:
 			
-			if self._thumb_from_epub_manifest (epub, preview_file):
-				return True
+			try:
+				if self._thumb_from_epub_manifest (epub, preview_file):
+					return True
+			except Exception as e:
+				self.log.warn (e)
+				self.log.warn ("couldn't handle epub manifest...")
+		
+		return self.thumb_from_zip (orginal_file, preview_file)
+
+
+
+
+	# generate a thumbnail for a zip container
+	def thumb_from_zip (self, orginal_file, preview_file):
+		self.log.info ("generating preview of EPUB for " + orginal_file)
+		file_url = urllib.urlopen (orginal_file)
+		
+		with zipfile.ZipFile (StringIO (file_url.read ()), "r") as zippy:
 			
-			if self._thumb_from_epub_file_cover (epub, preview_file):
-				return True
+			try:
+				if self._thumb_from_zip_images (zippy, preview_file):
+					return True
+			except Exception as e:
+				self.log.warn (e)
+				self.log.warn ("couldn't handle image search in zip...")
 			
 			return False
+
+
+
 
 	# this is just a helper function
 	# run cutycapt to capture a website...
@@ -329,22 +355,64 @@ class PyThumb:
 		return self._run_cutycapt ("file://" + os.getcwd () + "/" + orginal_file, preview_file, 1000)
 
 
+	# this is just a helper function
+	# for file.tar.gz it returns (file.tar, .gz)
+	def _get_file_name_and_ext (self, filename):
+		filename = os.path.basename (filename)
+		if len(filename.split('.')) > 2:
+			return ('.'.join (filename.split ('.')[0:-1]), '.' + filename.split('.')[-1])
+		return os.path.splitext(filename)
+
+
+	# this is just a helper function
+	# get the extension of a file (for 'file.tar.gz' it is 'file.tar')
+	def _get_file_name_wo_ext (self, filename):
+		return self._get_file_name_and_ext (filename)[0]
+
+	# this is just a helper function
+	# get the extension of a file (for 'file.tar.gz' it is '.gz')
+	def _get_file_ext (self, filename):
+		return self._get_file_name_and_ext (filename)[1]
+
+
 	# generate a thumbnail from an office file
 	def thumb_from_office_doc (self, orginal_file, preview_file):
 		self.log.info ("generating preview for office document " + orginal_file)
 		
-		# first convert it into a PDF -> libre office is necessary
+		
+		# try imagemagic to generate PDF of the office file:
 		with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
 			cmd = ["convert", orginal_file, temp.name]
 			self.log.debug ("executing " + str (cmd))
 			return_code = subprocess.call (cmd)
 			
 			if return_code != 0:
-				self.log.error ("error converting office file: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
-				return False
-			
-			# use imagemagick to convert the PDF
-			return self.thumb_from_image (temp.name + "[0]", preview_file)
+					self.log.error ("error converting office file with imagemagick: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
+			else:
+				# use imagemagick to convert the PDF
+				return_code = self.thumb_from_image (temp.name + "[0]", preview_file)
+				if return_code:
+					return True
+				else:
+					self.log.error ("error converting pdf of office file with imagemagick: " + orginal_file + " to " + preview_file)
+		
+		# try libreoffice to generate the PDF
+		temp = tempfile.mkdtemp (prefix='pythumb-working-office-')
+		cmd = ["libreoffice", "--headless", "--convert-to", "pdf", "--outdir", temp, orginal_file]
+		self.log.debug ("executing " + str (cmd))
+		return_code = subprocess.call (cmd)
+		
+		if return_code != 0:
+			self.log.error ("error converting office file: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
+			return False
+		
+		# use imagemagick to convert the PDF
+		f = os.path.join (temp, self._get_file_name_wo_ext (orginal_file) + ".pdf")
+		self.log.debug ("expecting output in " + f)
+		if (os.path.isfile (f)):
+			return self.thumb_from_image (f + "[0]", preview_file)
+		else:
+			self.log.error ("did not find outputfile in " + f)
 		return False
 
 
@@ -429,12 +497,16 @@ class PyThumb:
 			self.log.debug ("is plain text")
 			if self.thumb_from_plain_text (orginal_file, preview_file):
 				return True
+		
+		# zip archive? -> extract image if possible
+		if 'zip' in mime:
+			self.log.debug ("is a zip file")
+			if self._thumb_from_zip_images (orginal_file, preview_file):
+				return True
 			
 		# TODO:
 		# * application/zip; -> like eupb?
 		# * image/vnd.dwg;
-		# * text/plain; -> like name but juts the first few words?
-		# * remote websites
 			
 		# no solution so far?
 		self.log.warn ("failed to generate file-specific thumbnail for mime " + mime + " (" + orginal_file + ")")

@@ -8,6 +8,7 @@ import tempfile
 import logging
 from PIL import Image
 from testhelpers import check_thumbnail
+from shutil import copyfile
 
 
 
@@ -21,6 +22,7 @@ class TestOffice (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-1.png")
 				check_thumbnail (self, temp.name, pythumb)
 	
 	def test_two (self):
@@ -30,6 +32,7 @@ class TestOffice (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-2.png")
 				check_thumbnail (self, temp.name, pythumb)
 	
 	def test_three (self):
@@ -39,6 +42,7 @@ class TestOffice (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-3.png")
 				check_thumbnail (self, temp.name, pythumb)
 	
 	def test_four (self):
@@ -48,6 +52,7 @@ class TestOffice (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-4.png")
 				check_thumbnail (self, temp.name, pythumb)
 	
 	def test_five (self):
@@ -57,6 +62,8 @@ class TestOffice (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-5.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 	
 	def test_six (self):
@@ -66,4 +73,16 @@ class TestOffice (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-6.png")
+				#self.assertTrue (False)
+				check_thumbnail (self, temp.name, pythumb)
+	
+	def test_seven (self):
+			pythumb = PyThumb ()
+			f = "test/files/office-7.odp"
+			self.assertTrue (os.path.exists (f), "cannot find " + f)
+			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+				os.remove (temp.name)
+				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
+				copyfile (temp.name, "/tmp/pythumb-office-7.png")
 				check_thumbnail (self, temp.name, pythumb)

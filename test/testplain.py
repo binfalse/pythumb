@@ -21,8 +21,8 @@ class TestPlain (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
-				copyfile (temp.name, "/tmp/pythumb-plain-1.png")
-				self.assertTrue (False)
+				#copyfile (temp.name, "/tmp/pythumb-plain-1.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 				
 	def test_two (self):
@@ -32,8 +32,8 @@ class TestPlain (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
-				copyfile (temp.name, "/tmp/pythumb-plain-2.png")
-				self.assertTrue (False)
+				#copyfile (temp.name, "/tmp/pythumb-plain-2.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 				
 	def test_three (self):
@@ -43,8 +43,8 @@ class TestPlain (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
-				copyfile (temp.name, "/tmp/pythumb-plain-3.png")
-				self.assertTrue (False)
+				#copyfile (temp.name, "/tmp/pythumb-plain-3.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 				
 	def test_four (self):
@@ -54,8 +54,8 @@ class TestPlain (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
-				copyfile (temp.name, "/tmp/pythumb-plain-4.png")
-				self.assertTrue (False)
+				#copyfile (temp.name, "/tmp/pythumb-plain-4.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 				
 	def test_five (self):
@@ -65,8 +65,8 @@ class TestPlain (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
-				copyfile (temp.name, "/tmp/pythumb-plain-5.png")
-				self.assertTrue (False)
+				#copyfile (temp.name, "/tmp/pythumb-plain-5.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 				
 	def test_six (self):
@@ -76,7 +76,7 @@ class TestPlain (unittest.TestCase):
 			with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 				os.remove (temp.name)
 				self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "couldn't create thumbnail from " + f)
-				copyfile (temp.name, "/tmp/pythumb-plain-6.png")
-				self.assertTrue (False)
+				#copyfile (temp.name, "/tmp/pythumb-plain-6.png")
+				#self.assertTrue (False)
 				check_thumbnail (self, temp.name, pythumb)
 				
