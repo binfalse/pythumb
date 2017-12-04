@@ -55,8 +55,14 @@ class PyThumb:
 
 	# set the desired thumbnail dimensions
 	def set_thumb_dimensions (self, width, height):
-		self._thumb_width = width
-		self._thumb_height = height
+		if width > 0:
+			self._thumb_width = width
+		else:
+			self.log.warn("will not set width to " + str (width))
+		if height > 0:
+			self._thumb_height = height
+		else:
+			self.log.warn("will not set height to " + str (height))
 
 	# should existing thumbnails be overwritten?
 	def set_overwrite_thumb (self, boolean):
@@ -448,7 +454,8 @@ class PyThumb:
 			return False
 		
 		if not os.path.exists(orginal_file):
-			raise IOError ("file does not exist: " + orginal_file)
+			self.log.error ("file does not exist: " + orginal_file)
+			return False
 		
 		# guess the mime type of the file
 		m = magic.open(magic.MAGIC_MIME)

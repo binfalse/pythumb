@@ -24,6 +24,7 @@ output always in PNG format
 * libre office
 * image magic
 * ps2pdf
+* python-magic
 
 
 ## Usage
@@ -78,6 +79,17 @@ The easiest way to run all the tests is to install [python-nose](https://nose.re
     nosetests
 
 from the root directory of this repository. python-nose will discover and run all the tests.
+
+Run `nosetests` with enhanced verbosity to find the resulting files in a newly created `/test-results/` directory:
+
+    nosetests -v
+
+The resulting files will be named as `test.module-test_method-linenumber.png`.
+
+
+To get more information about the runs even if they all succeeded you may want to run 
+
+    nosetests -v --nologcapture --nocapture
 
 To just run a single test you may just use the default [unittest module](https://docs.python.org/2/library/unittest.html):
 

@@ -2,17 +2,11 @@
 # encoding=utf8
 
 from pythumb.pythumb import PyThumb
-import unittest
-import os
-import tempfile
-import logging
-from PIL import Image
-from testhelpers import check_thumbnail
-from shutil import copyfile
+from testhelpers import TestHelper
 
 
 # test image files
-class TestPlain (unittest.TestCase):
+class TestPlain (TestHelper):
 	
 	def file_ext_checker (self, pythumb, filename, wo_ext, ext):
 		
@@ -28,10 +22,36 @@ class TestPlain (unittest.TestCase):
 	
 	
 	def test_file_ext (self):
-			pythumb = PyThumb ()
+		pythumb = PyThumb ()
+		
+		self.file_ext_checker (pythumb, "file.name", "file", ".name")
+		self.file_ext_checker (pythumb, "/tmp/file.name.tar.gz", "file.name.tar", ".gz")
+		self.file_ext_checker (pythumb, "/tmp/file", "file", "")
+		self.file_ext_checker (pythumb, "/tmp/", "", "")
 			
-			self.file_ext_checker (pythumb, "file.name", "file", ".name")
-			self.file_ext_checker (pythumb, "/tmp/file.name.tar.gz", "file.name.tar", ".gz")
-			self.file_ext_checker (pythumb, "/tmp/file", "file", "")
-			self.file_ext_checker (pythumb, "/tmp/", "", "")
-			
+	def test_thumb_dimensions (self):
+		pythumb = PyThumb ()
+		
+		pythumb.set_thumb_dimensions (300, 300)
+		self.assertEqual (pythumb._thumb_width, 300, "wasn't able to update the thumb width")
+		self.assertEqual (pythumb._thumb_height, 300, "wasn't able to update the thumb height")
+		
+		pythumb.set_thumb_dimensions (500, 600)
+		self.assertEqual (pythumb._thumb_width, 500, "wasn't able to update the thumb width")
+		self.assertEqual (pythumb._thumb_height, 600, "wasn't able to update the thumb height")
+		
+		pythumb.set_thumb_dimensions (0, -1)
+		self.assertTrue (pythumb._thumb_width > 0, "thumb with is not >0")
+		self.assertTrue (pythumb._thumb_height > 0, "thumb height is not >0")
+		
+		pythumb.set_thumb_dimensions (-1, 0)
+		self.assertTrue (pythumb._thumb_width > 0, "thumb with is not >0")
+		self.assertTrue (pythumb._thumb_height > 0, "thumb height is not >0")
+		
+		pythumb.set_thumb_dimensions (100, -5)
+		self.assertTrue (pythumb._thumb_width > 0, "thumb with is not >0")
+		self.assertTrue (pythumb._thumb_height > 0, "thumb height is not >0")
+		
+		pythumb.set_thumb_dimensions (-5, 100)
+		self.assertTrue (pythumb._thumb_width > 0, "thumb with is not >0")
+		self.assertTrue (pythumb._thumb_height > 0, "thumb height is not >0")

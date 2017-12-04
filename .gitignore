@@ -95,3 +95,7 @@ ENV/
 
 # mkdocs documentation
 /site
+
+
+# temporary dirs from tests
+test-results/
