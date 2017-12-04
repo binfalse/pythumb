@@ -70,6 +70,7 @@ class PyThumb:
 	# generate a thumbnail file displaying just the file name
 	# this should be the last resort, if we cannot create a better thumbnail from the data
 	def thumb_from_name (self, name, preview_file):
+		self.log.info ("generating thumbnail from string: " + name)
 		# shorten the name to fit into the image
 		if len (name) > 100:
 			name = name[:95] + ".."
@@ -85,6 +86,8 @@ class PyThumb:
 			name = textwrap.wrap (name, len (name) / 2)
 		else:
 			name = [name]
+			
+		print name
 		
 		# calculate image dimensions, depending
 		# on width/height of the tokens
@@ -181,6 +184,25 @@ class PyThumb:
 				return False
 			return self.thumb_from_image (temp.name + "[0]", preview_file)
 		return False
+	
+	
+
+
+	# convert to PDF and do the pdf conversion
+	def thumb_from_eps (self, orginal_file, preview_file):
+		self.log.info ("generating thumbnail with epstopdf for " + orginal_file)
+		with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
+			cmd = ["epstopdf", orginal_file, temp.name]	
+			
+			self.log.debug ("executing " + str (cmd))
+			return_code = subprocess.call(cmd)
+			
+			if return_code != 0:
+				self.log.error ("error converting: " + orginal_file + " to " + temp.name + " -- command was: " + str (cmd) + "\n")
+				return False
+			return self.thumb_from_image (temp.name + "[0]", preview_file)
+		return False
+	
 
 
 	# this is just a helper function
@@ -326,11 +348,35 @@ class PyThumb:
 		return False
 
 
+	# generate a thumbnail from a plain text file
+	def thumb_from_plain_text (self, orginal_file, preview_file):
+		self.log.info ("generating preview for plain text document " + orginal_file)
+		
+		with open(orginal_file, 'r') as f:
+			string = f.read (200).strip()
+			self.log.info ("read first few characters from plain text file: " + string)
+			
+			# strip unnecessary white space
+			string = ' '.join(string.split())
+			self.log.info ("eliminated unnecessary white space: " + string)
+			
+			# if there is enough content we can use it:
+			if len (string) > 5:
+				self.log.info ("got enough content to generate thumb")
+				return self.thumb_from_name (string, preview_file)
+			
+			
+			self.log.warn ("failed... not enough content to generate thumb")
+			
+		return False
+
+
 	# generate a thumbnail for a file
 	def thumb_from_file (self, orginal_file, preview_file, orginal_fileName):
 		self.log.info ("generating preview for file " + orginal_file + " to " + preview_file)
 		
 		if not self._overwrite_thumb and os.path.exists (preview_file):
+			self.log.warn ("will not overwrite file " + preview_file + " as _overwrite_thumb is set to " + str (self._overwrite_thumb))
 			return False
 		
 		if not os.path.exists(orginal_file):
@@ -369,7 +415,7 @@ class PyThumb:
 		# HTML page? -> screenshot
 		if 'text/html' in mime:
 			self.log.debug ("is html")
-			if thumb_from_html (orginal_file, preview_file):
+			if self.thumb_from_html (orginal_file, preview_file):
 				return True
 		
 		# office document?
@@ -377,17 +423,21 @@ class PyThumb:
 			self.log.debug ("is office doc")
 			if self.thumb_from_office_doc (orginal_file, preview_file):
 				return True
-			
+		
+		# plain text file -> read first chars and print into pic
+		if 'text/' in mime:
+			self.log.debug ("is plain text")
+			if self.thumb_from_plain_text (orginal_file, preview_file):
+				return True
 			
 		# TODO:
-		# * EPS
 		# * application/zip; -> like eupb?
 		# * image/vnd.dwg;
 		# * text/plain; -> like name but juts the first few words?
 		# * remote websites
 			
 		# no solution so far?
-		self.log.warn ("don't understand mime " + mime + " from " + orginal_file)
+		self.log.warn ("failed to generate file-specific thumbnail for mime " + mime + " (" + orginal_file + ")")
 		# create a thumb just displaying a name
 		if self.thumb_from_name (orginal_fileName, preview_file):
 			return True
