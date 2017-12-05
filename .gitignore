@@ -97,5 +97,6 @@ ENV/
 /site
 
 
-# temporary dirs from tests
+# temporary dirs from tests etc
 test-results/
+cover/

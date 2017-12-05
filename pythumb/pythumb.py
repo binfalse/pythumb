@@ -139,7 +139,7 @@ class PyThumb:
 		with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 			img.save (temp.name)
 			return self.thumb_from_image (temp.name, preview_file)
-		return True
+		return False
 
 
 	# crop a very large image to a size of max 1000x1000

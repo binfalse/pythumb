@@ -39,6 +39,15 @@ class TestStuff (TestHelper):
 			f = "test/files/image-1.jpeg"
 			self.assertFalse (pythumb.thumb_from_file (f, temp.name, "testname"), "would overwrite file???")
 			
+			# set to overwrite!
+			pythumb.set_overwrite_thumb (True)
+			# can we now thumbnail it?
+			self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "would overwrite file???")
+			
+			# revert and make sure it fails again
+			pythumb.set_overwrite_thumb (False)
+			self.assertFalse (pythumb.thumb_from_file (f, temp.name, "testname"), "would overwrite file???")
+			
 			# remove file and make sure it now works
 			os.remove (temp.name)
 			self.assertTrue (pythumb.thumb_from_file (f, temp.name, "testname"), "cannot create thumbnail of " + f)
