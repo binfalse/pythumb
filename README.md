@@ -113,15 +113,31 @@ This will show an output such as:
 	Name                  Stmts   Miss  Cover   Missing
 	---------------------------------------------------
 	pythumb/__init__.py       8      4    50%   6-9
-	pythumb/pythumb.py      311     62    80%   142, 154, 159, 174-175, 189-190, 192, 199-210, 226, 266, 272-296, 310-314, 321-333, 347-348, 355, 403, 412-413, 421-422, 510-512, 524, 535-536
+	pythumb/pythumb.py      310     18    94%   167, 196-197, 336-338, 355-357, 373-374, 381, 443-444, 452-453, 543, 554
 	---------------------------------------------------
-	TOTAL                   319     66    79%
+	TOTAL                   318     22    93%
 	----------------------------------------------------------------------
-	Ran 34 tests in 31.592s
+	Ran 44 tests in 38.982s
 
-Thus, here we has a code-coverage of 80%, which is probably in the meantime much higher ;-)
+	OK
+
+
+Thus, here we have a code-coverage of 94%, which is probably in the meantime much higher ;-)
 
 A detailed coverage report will then be available in `cover/index.html`.
 
 ## License
+
+	PyThumb is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with PyThumb.  If not, see <http://www.gnu.org/licenses/>.
 
