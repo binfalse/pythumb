@@ -5,6 +5,7 @@ from pythumb.pythumb import PyThumb
 from testhelpers import TestHelper
 import tempfile
 import os
+from pandas.tests.tseries.test_offsets import assertEq
 
 
 
@@ -30,7 +31,14 @@ class TestStuff (TestHelper):
 		self.file_ext_checker (pythumb, "/tmp/file.name.tar.gz", "file.name.tar", ".gz")
 		self.file_ext_checker (pythumb, "/tmp/file", "file", "")
 		self.file_ext_checker (pythumb, "/tmp/", "", "")
+	
+	def test_font (self):
+		pythumb = PyThumb ()
+		pythumb.set_font ("stuff")
+		self.assertEqual ("stuff", pythumb._font, "didn't manage to replace font")
 		
+		
+	
 	def test_checks (self):
 		pythumb = PyThumb ()
 		with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp:

@@ -76,9 +76,6 @@ class TestHelper (unittest.TestCase):
 			
 			self.assertTrue (os.path.exists (temp.name), "thumb not generated: " + temp.name)
 			
-			log.debug ("verifying thumbnail")
-			self._check_thumbnail (temp.name, pythumb, thumb_width, thumb_height)
-			
 			if self.is_verbose():
 				testresults='test-results/'
 				if not os.path.exists(testresults):
@@ -88,6 +85,9 @@ class TestHelper (unittest.TestCase):
 				saveas = testresults + module.__name__ + "-" + str (frame[3]) + "-" + str (frame[2]) + ".png"
 				log.debug ("storing resulting thumbnail as " + saveas)
 				copyfile (temp.name, saveas)
+			
+			log.debug ("verifying thumbnail")
+			self._check_thumbnail (temp.name, pythumb, thumb_width, thumb_height)
 			
 			if fail:
 				log.debug ("will fail here as requested!")

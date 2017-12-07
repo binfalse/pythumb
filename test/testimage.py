@@ -31,6 +31,10 @@ class TestImage (TestHelper):
 			with tempfile.NamedTemporaryFile (suffix='.png', delete=False) as temp2:
 				os.remove (temp1.name)
 				os.remove (temp2.name)
-				self.assertFalse (pythumb.thumb_from_image (temp1.name, temp2.name), "no convert error for nonexisting file?")
+				try:
+					pythumb.thumb_from_image (temp1.name, temp2.name)
+					self.fail ("no convert error for nonexisting file?")
+				except IOError, e:
+					pass
 
 

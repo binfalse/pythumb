@@ -15,6 +15,7 @@ import magic
 import zipfile
 import logging
 import textwrap
+from shutil import copyfile
 from StringIO import StringIO
 
 reload(sys)
@@ -43,9 +44,11 @@ class PyThumb:
 	_font_color = (50, 50, 50)
 	_line_color = (80, 80, 80)
 
-	_img_ext_regex = re.compile (r'^.*\.(jpg|jpeg|png)$', flags=re.IGNORECASE)
+	_img_ext_regex = re.compile (r'^.*\.(jpg|jpeg|png|gif)$', flags=re.IGNORECASE)
 	_cover_regex = re.compile (r'.*cover.*\.(jpg|jpeg|png)', flags=re.IGNORECASE)
 	_url_regex = re.compile (r'^https?://', flags=re.IGNORECASE)
+	
+	_font = "font.ttf"
 
 
 	def __init__(self):
@@ -69,7 +72,10 @@ class PyThumb:
 		self._overwrite_thumb = boolean
 
 
-
+	# set the font to use for text in default images
+	# needs to be the path to a true-type-font
+	def set_font (self, fontpath):
+		self._font = fontpath
 
 
 
@@ -82,7 +88,9 @@ class PyThumb:
 			name = name[:95] + ".."
 		
 		fontsize = 26
-		font = ImageFont.truetype ("font.ttf", fontsize)
+		font = ImageFont.load_default()
+		if self._font and os.path.isfile (self._font):
+			font = ImageFont.truetype (self._font, fontsize)
 		
 		if len (name) > 90:
 			name = textwrap.wrap (name, len (name) / 4)
@@ -139,41 +147,61 @@ class PyThumb:
 		with tempfile.NamedTemporaryFile (suffix='.png') as temp:
 			img.save (temp.name)
 			return self.thumb_from_image (temp.name, preview_file)
-		return False
 
 
 	# crop a very large image to a size of max 1000x1000
 	# necessary for imagemagick, as that won't handle extremely large images...
-	def crop_preview (self, orginal_file):
-		img = Image.open (orginal_file)
+	# BE CAREFUL: will crop in-place!! so do not provide original/raw files!
+	def _crop_preview (self, preview_file):
+		img = Image.open (preview_file)
 		
-		width = 1000
-		height = 1000
+		width = 10000
+		height = 10000
 		
 		if img.size[0] < width and img.size[1] < height:
 			return True
 		
-		if img.size[0] < 1000:
+		if img.size[0] < 10000:
 			width = img.size[0]
-		if img.size[1] < 1000:
+		if img.size[1] < 10000:
 			height = img.size[1]
 		
-		self.log.debug ("cropping the image " + orginal_file + " (" + str (img.size) + ")" + " to " + str (width) + "x" + str (height))
-		return img.crop ((0, 0, width, height)).save (orginal_file)
+		self.log.debug ("cropping the image " + preview_file + " (" + str (img.size) + ")" + " to " + str (width) + "x" + str (height))
+		img.crop ((0, 0, width, height)).save (preview_file)
+		return True
+
+
+	# converts orginal_file to preview_file using imagemagick
+	def _run_convert (self, orginal_file, preview_file):
+		self.log.info ("running convert utility for " + orginal_file + " to " + preview_file)
+		cmd = ["convert", "-trim", "-thumbnail", str (self._thumb_width) + "x" + str (self._thumb_height), "-flatten", orginal_file, preview_file]
+		self.log.debug ("executing " + str (cmd))
+		
+		return_code = subprocess.call(cmd)
+		if return_code != 0:
+			self.log.error ("error converting: " + orginal_file + " to " + preview_file + " -- command was: " + str (cmd) + "\n")
+			return False
+		return True
 
 
 	# generate a thumbnail with imagemagick
 	def thumb_from_image (self, orginal_file, preview_file):
 		self.log.info ("generating thumbnail with imagemagick for " + orginal_file)
-		cmd = ["convert", "-trim", "-thumbnail", str (self._thumb_width) + "x" + str (self._thumb_height), "-flatten", orginal_file, preview_file]
-		
-		self.log.debug ("executing " + str (cmd))
-		return_code = subprocess.call(cmd)
-		
-		if return_code != 0:
-			self.log.error ("error converting: " + orginal_file + " to " + preview_file + " -- command was: " + str (cmd) + "\n")
-			return False
-		return True
+		with tempfile.NamedTemporaryFile (suffix=str(self._get_file_ext(orginal_file)), delete=False) as temp:
+			# only cropping supported formats by PIL
+			if self._img_ext_regex.match (temp.name):
+				self.log.info ("copying " + orginal_file + " to " + temp.name + " for cropping")
+				copyfile (orginal_file, temp.name)
+				if not self._crop_preview (temp.name):
+					self.log.error ("could not crop copied original...")
+					return False
+			
+			return self._run_convert(orginal_file, preview_file)
+	
+	# generate a thumbnail from a PDF file with image magick
+	def thumb_from_pdf (self, orginal_file, preview_file):
+		self.log.info ("generating thumbnail with imagemagick for " + orginal_file)
+		return self._run_convert(orginal_file, preview_file)
 
 
 	# convert to PDF and do the pdf conversion
@@ -188,26 +216,25 @@ class PyThumb:
 			if return_code != 0:
 				self.log.error ("error converting: " + orginal_file + " to " + temp.name + " -- command was: " + str (cmd) + "\n")
 				return False
-			return self.thumb_from_image (temp.name + "[0]", preview_file)
-		return False
+			return self.thumb_from_pdf (temp.name + "[0]", preview_file)
 	
 	
 
-
+	# probably not necessary as we can do ps2pdf
 	# convert to PDF and do the pdf conversion
-	def thumb_from_eps (self, orginal_file, preview_file):
-		self.log.info ("generating thumbnail with epstopdf for " + orginal_file)
-		with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
-			cmd = ["epstopdf", orginal_file, temp.name]	
-			
-			self.log.debug ("executing " + str (cmd))
-			return_code = subprocess.call(cmd)
-			
-			if return_code != 0:
-				self.log.error ("error converting: " + orginal_file + " to " + temp.name + " -- command was: " + str (cmd) + "\n")
-				return False
-			return self.thumb_from_image (temp.name + "[0]", preview_file)
-		return False
+	#def thumb_from_eps (self, orginal_file, preview_file):
+	#	self.log.info ("generating thumbnail with epstopdf for " + orginal_file)
+	#	with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
+	#		cmd = ["epstopdf", orginal_file, temp.name]	
+	#		
+	#		self.log.debug ("executing " + str (cmd))
+	#		return_code = subprocess.call(cmd)
+	#		
+	#		if return_code != 0:
+	#			self.log.error ("error converting: " + orginal_file + " to " + temp.name + " -- command was: " + str (cmd) + "\n")
+	#			return False
+	#		return self.thumb_from_pdf (temp.name + "[0]", preview_file)
+	#	return False
 	
 
 
@@ -223,7 +250,6 @@ class PyThumb:
 			temp.flush ()
 			# convert to thumbnail
 			return self.thumb_from_image (temp.name, preview_file)
-		return False
 
 
 	# this is just a helper function
@@ -287,7 +313,7 @@ class PyThumb:
 				candidates.append(fileinfo)
 		
 		self.log.debug ("found candidates: " + str (candidates))
-		if candidates:
+		if len (candidates) > 0:
 			# take 'largest' candidate, assuming this is the best picture ;-)
 			candidate = max (candidates, key=lambda f: f.file_size)
 			self.log.debug ("best candidate: " + candidate.filename)
@@ -330,7 +356,7 @@ class PyThumb:
 				self.log.warn (e)
 				self.log.warn ("couldn't handle image search in zip...")
 			
-			return False
+		return False
 
 
 
@@ -340,7 +366,7 @@ class PyThumb:
 	def _run_cutycapt (self, orginal_file, preview_file, max_wait):
 		self.log.info ("running cutycapt for " + orginal_file)
 		with tempfile.NamedTemporaryFile (suffix='.png') as temp:
-			cmd = ["cutycapt", "--max-wait=" + str (max_wait), "--url=" + orginal_file, "--out=" + temp.name]
+			cmd = ["cutycapt", "--max-wait=" + str (max_wait), "--private-browsing=on", "--url=" + orginal_file, "--out=" + temp.name]
 			self.log.debug ("executing " + str (cmd))
 			return_code = subprocess.call (cmd)
 			if return_code != 0:
@@ -348,7 +374,7 @@ class PyThumb:
 				return False
 			
 			# crop super-long (height) HTML pages, otherwise imagemagick will complain...
-			self.crop_preview (temp.name)
+			self._crop_preview (temp.name)
 			
 			# use imagemagick to create the actual thumbnail
 			return self.thumb_from_image (temp.name, preview_file)
@@ -387,20 +413,25 @@ class PyThumb:
 		
 		
 		# try imagemagic to generate PDF of the office file:
-		with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
-			cmd = ["convert", orginal_file, temp.name]
-			self.log.debug ("executing " + str (cmd))
-			return_code = subprocess.call (cmd)
+# 		with tempfile.NamedTemporaryFile (suffix='.pdf') as temp:
 			
-			if return_code != 0:
-					self.log.error ("error converting office file with imagemagick: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
-			else:
-				# use imagemagick to convert the PDF
-				return_code = self.thumb_from_image (temp.name + "[0]", preview_file)
-				if return_code:
-					return True
-				else:
-					self.log.error ("error converting pdf of office file with imagemagick: " + orginal_file + " to " + preview_file)
+		if self._run_convert(orginal_file, preview_file):
+			return True
+		else:
+			self.log.error ("error converting office file with imagemagick: " + orginal_file + " to " + preview_file)
+# 			cmd = ["convert", orginal_file, temp.name]
+# 			self.log.debug ("executing " + str (cmd))
+# 			return_code = subprocess.call (cmd)
+# 			
+# 			if return_code != 0:
+# 					self.log.error ("error converting office file with imagemagick: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
+# 			else:
+# 				# use imagemagick to convert the PDF
+# 				return_code = self.thumb_from_pdf (temp.name + "[0]", preview_file)
+# 				if return_code:
+# 					return True
+# 				else:
+# 					self.log.error ("error converting pdf of office file with imagemagick: " + orginal_file + " to " + preview_file)
 		
 		# try libreoffice to generate the PDF
 		temp = tempfile.mkdtemp (prefix='pythumb-working-office-')
@@ -416,7 +447,7 @@ class PyThumb:
 		f = os.path.join (temp, self._get_file_name_wo_ext (orginal_file) + ".pdf")
 		self.log.debug ("expecting output in " + f)
 		if (os.path.isfile (f)):
-			return self.thumb_from_image (f + "[0]", preview_file)
+			return self.thumb_from_pdf (f + "[0]", preview_file)
 		else:
 			self.log.error ("did not find outputfile in " + f)
 		return False
@@ -466,7 +497,7 @@ class PyThumb:
 		# pdf like document? -> image magic...
 		if any (option in mime for option in ['application/pdf', 'djvu']):
 			self.log.debug ("is pdf like")
-			if self.thumb_from_image (orginal_file + "[0]", preview_file):
+			if self.thumb_from_pdf (orginal_file + "[0]", preview_file):
 				return True
 		
 		# is that an image? -> just use image magic...
@@ -508,11 +539,10 @@ class PyThumb:
 		# zip archive? -> extract image if possible
 		if 'zip' in mime:
 			self.log.debug ("is a zip file")
-			if self._thumb_from_zip_images (orginal_file, preview_file):
+			if self.thumb_from_zip (orginal_file, preview_file):
 				return True
 			
 		# TODO:
-		# * application/zip; -> like eupb?
 		# * image/vnd.dwg;
 			
 		# no solution so far?

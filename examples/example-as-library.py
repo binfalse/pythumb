@@ -9,10 +9,18 @@ from pythumb import PyThumb
 import tempfile
 import os
 
+# enable logging if desired
+#import logging
+#logging.basicConfig()
+#tmplog = logging.getLogger("pythumb")
+#tmplog.setLevel(logging.DEBUG)
+
 
 # create pythumb instance
 pythumb = PyThumb ()
-
+# setup if not satisfied with default settings
+pythumb.set_thumb_dimensions (100, 100)
+pythumb.set_font ("../font.ttf")
 
 # create thumbnail from a website
 url = "https://binfalse.de/"
