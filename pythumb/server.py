@@ -19,27 +19,18 @@
 # You should have received a copy of the GNU General Public License
 # along with PyThumb.  If not, see <http://www.gnu.org/licenses/>.
 
-import string
 import cgi
-import time
 import argparse
 import re
 import os
-import sys
 from pythumb import PyThumb
 import traceback
 import tempfile
 import logging
-from os import curdir, sep
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from shutil import copyfile
 
 logging.basicConfig()
-log = logging.getLogger("pythumb.pythumb")
-log.setLevel(logging.DEBUG)
-log = logging.getLogger("pythumb")
-log.setLevel(logging.DEBUG)
-
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
@@ -73,7 +64,7 @@ test
 <html><head><title>PyThumb Error</title></head>
 <body>
 <h1>ERROR</h1>
-something went wrong with your upload...
+something went wrong...
 <h3>""" + title + "</h3><pre>" + message + """</pre>
 </body>
 </html>
@@ -140,7 +131,7 @@ something went wrong with your upload...
 				
 				if _url_regex.match(target):
 					if not ALLOW_REMOTE:
-						self.send_error ("Remote thumbs disabled", "The feature for generating thumbnails of remote websites has been disabled in this server.")
+						self.send_error ("Remote thumbnails disabled", "The feature for generating thumbnails of remote websites has been disabled in this instance.")
 						return
 					
 					with tempfile.NamedTemporaryFile (suffix='.png') as temp:

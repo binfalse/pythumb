@@ -124,7 +124,7 @@ This will show an output such as:
 
 Thus, here we have a code-coverage of 94%, which is probably in the meantime much higher ;-)
 
-A detailed coverage report will then be available in `cover/index.html`.
+A detailed coverage report will then also be available in `cover/index.html`.
 
 ## License
 
