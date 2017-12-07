@@ -35,6 +35,7 @@ import logging
 import textwrap
 from shutil import copyfile
 from io import StringIO
+from xvfbwrapper import Xvfb
 
 # reload(sys)
 # sys.setdefaultencoding('utf8')
@@ -382,12 +383,13 @@ class PyThumb:
 	def _run_cutycapt (self, orginal_file, preview_file, max_wait):
 		self.log.info ("running cutycapt for " + orginal_file)
 		with tempfile.NamedTemporaryFile (suffix='.png') as temp:
-			cmd = ["cutycapt", "--max-wait=" + str (max_wait), "--private-browsing=on", "--url=" + orginal_file, "--out=" + temp.name]
-			self.log.debug ("executing " + str (cmd))
-			return_code = subprocess.call (cmd)
-			if return_code != 0:
-				self.log.error ("error converting html file: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
-				return False
+			with Xvfb() as xvfb:
+				cmd = ["cutycapt", "--max-wait=" + str (max_wait), "--private-browsing=on", "--user-agent=PyThumb (https://github.com/binfalse/pythumb/)", "--url=" + orginal_file, "--out=" + temp.name]
+				self.log.debug ("executing " + str (cmd))
+				return_code = subprocess.call (cmd)
+				if return_code != 0:
+					self.log.error ("error converting html file: " + orginal_file + " to " + preview_file + " -- command was " + str (cmd))
+					return False
 			
 			# crop super-long (height) HTML pages, otherwise imagemagick will complain...
 			self._crop_preview (temp.name)
