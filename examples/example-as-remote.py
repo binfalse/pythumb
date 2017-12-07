@@ -12,9 +12,9 @@ SERVER='http://localhost:12346'
 
 # create thumbnail of the file test/files/pdflike-2.pdf
 # and store the thumbnail in /tmp/pythumb-tmp-file.png
-response = requests.post(SERVER, files=dict(file=open('test/files/pdflike-2.pdf', 'rb')), data=dict(target='upload', filename='main.pdf'))
+response = requests.post (SERVER, files=dict (file=open ('../test/files/pdflike-2.pdf', 'rb')), data=dict (target='upload', filename='main.pdf'))
 if response.status_code == 200:
-	with open('/tmp/pythumb-tmp-file.png', 'wb') as f:
+	with open ('/tmp/pythumb-tmp-file.png', 'wb') as f:
 		f.write(response.content)
 		print ("created thumbnail of test/files/pdflike-2.pdf in /tmp/pythumb-tmp-file.png")
 else:
@@ -27,9 +27,9 @@ else:
 
 # create a thumbnail of https://binfalse.de/
 # and store it in /tmp/pythumb-tmp-web.png
-response = requests.post(SERVER, files=dict(target='https://binfalse.de/'))
+response = requests.post (SERVER, files=dict (target='https://binfalse.de/'))
 if response.status_code == 200:
-	with open('/tmp/pythumb-tmp-web.png', 'wb') as f:
+	with open ('/tmp/pythumb-tmp-web.png', 'wb') as f:
 		f.write(response.content)
 		print ("created thumbnail of https://binfalse.de/ in /tmp/pythumb-tmp-web.png")
 else:

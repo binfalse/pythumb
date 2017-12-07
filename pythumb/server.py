@@ -31,8 +31,6 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from shutil import copyfile
 
 logging.basicConfig()
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
 
 
 
@@ -158,10 +156,24 @@ def main():
 	parser.add_argument ('--port', nargs='?', default=80, type=int, help='TCP port of the web server (default: 80)')
 	parser.add_argument ('--ip', nargs='?', default='0.0.0.0', help='IP address of the web server (default: 0.0.0.0)')
 	
+	parser.add_argument ('--verbose', action='store_true', default=False, help='print debugging information')
+	
 	parser.add_argument ('--no-upload', dest='noupload', action='store_true', default=False, help='disable file upload')
 	parser.add_argument ('--no-remote', dest='noremote', action='store_true', default=False, help='disable thumbnails of remote websites')
 	
 	args = parser.parse_args ()
+	
+	if args.verbose:
+		print "verbosity turned on"
+		tmplog = logging.getLogger(__name__)
+		tmplog.setLevel(logging.DEBUG)
+		
+		tmplog = logging.getLogger("pythumb.pythumb")
+		tmplog.setLevel(logging.DEBUG)
+		
+		tmplog = logging.getLogger("pythumb")
+		tmplog.setLevel(logging.DEBUG)
+	
 	
 	ALLOW_UPLOAD = not args.noupload
 	ALLOW_REMOTE = not args.noremote
