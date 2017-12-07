@@ -30,9 +30,9 @@ if os.path.isfile (thumb):
 	os.remove (thumb)
 
 if pythumb.thumb_from_website (url, thumb):
-	print "thumbnail of " + url + " stored in " + thumb
+	print ("thumbnail of " + url + " stored in " + thumb)
 else:
-	print "couldn't create thumbnail from " + url
+	print ("couldn't create thumbnail from " + url)
 
 
 
@@ -44,7 +44,7 @@ if os.path.isfile (thumb):
 	os.remove (thumb)
 
 if pythumb.thumb_from_file (filename, thumb, "some default string"):
-	print "thumbnail of " + filename + " stored in " + thumb
+	print ("thumbnail of " + filename + " stored in " + thumb)
 else:
-	print "couldn't create thumbnail from " + filename
+	print ("couldn't create thumbnail from " + filename)
 

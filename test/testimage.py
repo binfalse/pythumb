@@ -20,7 +20,7 @@
 # along with PyThumb.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from testhelpers import TestHelper
+from test.testhelpers import TestHelper
 
 import os
 import tempfile
@@ -52,7 +52,7 @@ class TestImage (TestHelper):
 				try:
 					pythumb.thumb_from_image (temp1.name, temp2.name)
 					self.fail ("no convert error for nonexisting file?")
-				except IOError, e:
+				except IOError:
 					pass
 
 

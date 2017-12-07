@@ -145,7 +145,7 @@ something went wrong...
 			
 		except:
 			tb = traceback.format_exc()
-			print tb
+			print (tb)
 			self.send_error ("Upload failed", "exception raised")
 
 
@@ -164,7 +164,7 @@ def main():
 	args = parser.parse_args ()
 	
 	if args.verbose:
-		print "verbosity turned on"
+		print ("verbosity turned on")
 		tmplog = logging.getLogger(__name__)
 		tmplog.setLevel(logging.DEBUG)
 		
@@ -180,10 +180,10 @@ def main():
 	
 	try:
 		server = HTTPServer ((args.ip, args.port), WebHandler)
-		print 'started server...'
+		print ('started server...')
 		server.serve_forever()
 	except KeyboardInterrupt:
-		print 'killing server...'
+		print ('killing server...')
 		server.socket.close()
 
 if __name__ == '__main__':

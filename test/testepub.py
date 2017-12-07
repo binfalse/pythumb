@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with PyThumb.  If not, see <http://www.gnu.org/licenses/>.
 
-from testhelpers import TestHelper
+from test.testhelpers import TestHelper
 
 
 # test the epub files

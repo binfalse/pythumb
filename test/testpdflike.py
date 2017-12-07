@@ -20,7 +20,7 @@
 # along with PyThumb.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from testhelpers import TestHelper
+from test.testhelpers import TestHelper
 
 import os
 import tempfile

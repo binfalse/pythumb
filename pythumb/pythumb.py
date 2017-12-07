@@ -26,7 +26,6 @@ from PIL import ImageFont
 from PIL import Image
 import subprocess
 import tempfile
-import urllib
 import re
 import os
 import sys
@@ -35,10 +34,10 @@ import zipfile
 import logging
 import textwrap
 from shutil import copyfile
-from StringIO import StringIO
+from io import StringIO
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 # DEBUGGING
 import pdb
@@ -112,15 +111,15 @@ class PyThumb:
 			font = ImageFont.truetype (self._font, fontsize)
 		
 		if len (name) > 90:
-			name = textwrap.wrap (name, len (name) / 4)
+			name = textwrap.wrap (name, round (len (name) / 4))
 		elif len (name) > 60:
-			name = textwrap.wrap (name, len (name) / 3)
+			name = textwrap.wrap (name, round (len (name) / 3))
 		elif len (name) > 30:
-			name = textwrap.wrap (name, len (name) / 2)
+			name = textwrap.wrap (name, round (len (name) / 2))
 		else:
 			name = [name]
 			
-		print name
+		self.log.info ("name to print: " + str (name))
 		
 		# calculate image dimensions, depending
 		# on width/height of the tokens
@@ -345,9 +344,8 @@ class PyThumb:
 	# inspired by https://github.com/marianosimone/epub-thumbnailer
 	def thumb_from_epub (self, orginal_file, preview_file):
 		self.log.info ("generating preview of EPUB for " + orginal_file)
-		file_url = urllib.urlopen (orginal_file)
 		
-		with zipfile.ZipFile (StringIO (file_url.read ()), "r") as epub:
+		with zipfile.ZipFile (orginal_file, "r") as epub:
 			
 			try:
 				if self._thumb_from_epub_manifest (epub, preview_file):
@@ -364,9 +362,8 @@ class PyThumb:
 	# generate a thumbnail for a zip container
 	def thumb_from_zip (self, orginal_file, preview_file):
 		self.log.info ("generating preview of EPUB for " + orginal_file)
-		file_url = urllib.urlopen (orginal_file)
 		
-		with zipfile.ZipFile (StringIO (file_url.read ()), "r") as zippy:
+		with zipfile.ZipFile (orginal_file, "r") as zippy:
 			
 			try:
 				if self._thumb_from_zip_images (zippy, preview_file):
