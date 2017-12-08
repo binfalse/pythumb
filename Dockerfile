@@ -21,11 +21,12 @@ MAINTAINER martin scharm <https://binfalse.de/contact/>
 # doing all in once to get rid of the useless stuff
 RUN apt-get update \
 	&& apt-get install -y -q --no-install-recommends \
-		python3-magic \
-		python3-pil \
-		python3-nose \
-		python3-xvfbwrapper \
+		python-magic \
+		python-pil \
+		python-nose \
+		python-xvfbwrapper \
 		cutycapt \
+		fonts-droid \
 		libreoffice \
 		libreoffice-common \
 		default-jre \
@@ -41,7 +42,8 @@ COPY test/files /pythumb/test/files
 WORKDIR /pythumb
 
 # run tests to verify everything is there...
-RUN nosetests3 && rm -rf /pythumb/test
+RUN nosetests
 
 
-ENTRYPOINT python /pythumb/pythumb/server.py
+ENTRYPOINT ["python2", "/pythumb/pythumb/server.py"]
+CMD ["--port", "80", "--ip", "0.0.0.0"]

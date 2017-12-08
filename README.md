@@ -20,6 +20,7 @@ output always in PNG format
 
 ## Requirements
 
+
 * cutycapt
 * libre office
 * image magic

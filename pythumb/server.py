@@ -161,6 +161,8 @@ def main():
 	parser.add_argument ('--no-upload', dest='noupload', action='store_true', default=False, help='disable file upload')
 	parser.add_argument ('--no-remote', dest='noremote', action='store_true', default=False, help='disable thumbnails of remote websites')
 	
+	
+	
 	args = parser.parse_args ()
 	
 	if args.verbose:

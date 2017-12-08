@@ -21,9 +21,6 @@
 
 from __future__ import unicode_literals 
 from xml.dom import minidom
-from PIL import ImageDraw
-from PIL import ImageFont
-from PIL import Image
 import subprocess
 import tempfile
 import re
@@ -33,6 +30,9 @@ import magic
 import zipfile
 import logging
 import textwrap
+from PIL import ImageDraw
+from PIL import ImageFont
+from PIL import Image
 from shutil import copyfile
 from io import StringIO
 from xvfbwrapper import Xvfb
@@ -67,7 +67,7 @@ class PyThumb:
 	_cover_regex = re.compile (r'.*cover.*\.(jpg|jpeg|png)', flags=re.IGNORECASE)
 	_url_regex = re.compile (r'^https?://', flags=re.IGNORECASE)
 	
-	_font = "font.ttf"
+	_font = "/usr/share/fonts/truetype/droid/DroidSerif-Regular.ttf"
 
 
 	def __init__(self):
@@ -112,11 +112,11 @@ class PyThumb:
 			font = ImageFont.truetype (self._font, fontsize)
 		
 		if len (name) > 90:
-			name = textwrap.wrap (name, round (len (name) / 4))
+			name = textwrap.wrap (name, len (name) / 4)
 		elif len (name) > 60:
-			name = textwrap.wrap (name, round (len (name) / 3))
+			name = textwrap.wrap (name, len (name) / 3)
 		elif len (name) > 30:
-			name = textwrap.wrap (name, round (len (name) / 2))
+			name = textwrap.wrap (name, len (name) / 2)
 		else:
 			name = [name]
 			
