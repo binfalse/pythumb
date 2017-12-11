@@ -112,11 +112,11 @@ class PyThumb:
 			font = ImageFont.truetype (self._font, fontsize)
 		
 		if len (name) > 90:
-			name = textwrap.wrap (name, len (name) / 4)
+			name = textwrap.wrap (name, round (len (name) / 4))
 		elif len (name) > 60:
-			name = textwrap.wrap (name, len (name) / 3)
+			name = textwrap.wrap (name, round (len (name) / 3))
 		elif len (name) > 30:
-			name = textwrap.wrap (name, len (name) / 2)
+			name = textwrap.wrap (name, round (len (name) / 2))
 		else:
 			name = [name]
 			
