@@ -68,11 +68,34 @@ class PyThumb:
 	_url_regex = re.compile (r'^https?://', flags=re.IGNORECASE)
 	
 	_font = "/usr/share/fonts/truetype/droid/DroidSerif-Regular.ttf"
+	
+
+	default_crop_width = 10000
+	default_crop_height = 10000
+	
+	_crop_width = default_crop_width
+	_crop_height = default_crop_height
 
 
 	def __init__(self):
 		self._thumb_width = self.default_thumb_width
 		self._thumb_height = self.default_thumb_height
+		
+		self._crop_width = self.default_crop_width
+		self._crop_height = self.default_crop_height
+
+
+	# set the desired cropping dimensions
+	def set_crop_dimensions (self, width, height):
+		if width > 0:
+			self._crop_width = width
+		else:
+			self.log.warn("will not set width to " + str (width))
+		
+		if height > 0:
+			self._crop_height = height
+		else:
+			self.log.warn("will not set height to " + str (height))
 
 
 	# set the desired thumbnail dimensions
@@ -81,6 +104,7 @@ class PyThumb:
 			self._thumb_width = width
 		else:
 			self.log.warn("will not set width to " + str (width))
+		
 		if height > 0:
 			self._thumb_height = height
 		else:
@@ -174,8 +198,8 @@ class PyThumb:
 	def _crop_preview (self, preview_file):
 		img = Image.open (preview_file)
 		
-		width = 10000
-		height = 10000
+		width = self._crop_width
+		height = self._crop_height
 		
 		if img.size[0] < width and img.size[1] < height:
 			return True
@@ -185,7 +209,7 @@ class PyThumb:
 		if img.size[1] < 10000:
 			height = img.size[1]
 		
-		self.log.debug ("cropping the image " + preview_file + " (" + str (img.size) + ")" + " to " + str (width) + "x" + str (height))
+		self.log.debug ("cropping the image " + preview_file + " " + str (img.size) + "" + " to " + str (width) + "x" + str (height))
 		img.crop ((0, 0, width, height)).save (preview_file)
 		return True
 
@@ -207,20 +231,21 @@ class PyThumb:
 	def thumb_from_image (self, orginal_file, preview_file):
 		self.log.info ("generating thumbnail with imagemagick for " + orginal_file)
 		with tempfile.NamedTemporaryFile (suffix=str(self._get_file_ext(orginal_file)), delete=False) as temp:
-			# only cropping supported formats by PIL
-			if self._img_ext_regex.match (temp.name):
-				self.log.info ("copying " + orginal_file + " to " + temp.name + " for cropping")
-				copyfile (orginal_file, temp.name)
-				if not self._crop_preview (temp.name):
-					self.log.error ("could not crop copied original...")
-					return False
 			
-			return self._run_convert(orginal_file, preview_file)
+			self.log.info ("copying " + orginal_file + " to " + temp.name + " for cropping")
+			copyfile (orginal_file, temp.name)
+			
+			# only cropping supported formats by PIL
+			if self._img_ext_regex.match (orginal_file) and not self._crop_preview (temp.name):
+				self.log.error ("could not crop copied original...")
+				return False
+			
+			return self._run_convert (temp.name, preview_file)
 	
 	# generate a thumbnail from a PDF file with image magick
 	def thumb_from_pdf (self, orginal_file, preview_file):
 		self.log.info ("generating thumbnail with imagemagick for " + orginal_file)
-		return self._run_convert(orginal_file, preview_file)
+		return self._run_convert (orginal_file, preview_file)
 
 
 	# convert to PDF and do the pdf conversion
@@ -392,7 +417,7 @@ class PyThumb:
 					return False
 			
 			# crop super-long (height) HTML pages, otherwise imagemagick will complain...
-			self._crop_preview (temp.name)
+			#self._crop_preview (temp.name)
 			
 			# use imagemagick to create the actual thumbnail
 			return self.thumb_from_image (temp.name, preview_file)

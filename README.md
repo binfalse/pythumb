@@ -31,6 +31,8 @@ output always in PNG format
 ## Usage
 
 
+
+
 ### As a Library
 
 pythumb 
@@ -66,7 +68,11 @@ from file:
 
 
 
---max-witdh --max-height
+maxwitdh maxheight
+
+need to crop, because image magic may fail etc...
+cropwidth : default 10000, but for websites that may look ugly...
+if you want to see the first screen, set crop height for example to 1000
 
 ### Through Docker
 

@@ -101,6 +101,10 @@ something went wrong...
 				
 				maxwidth = self.parse_dimension (query.get ('maxwidth', b'-1'))
 				maxheight = self.parse_dimension (query.get ('maxheight', b'-1'))
+				
+				cropwidth = self.parse_dimension (query.get ('cropwidth', b'-1'))
+				cropheight = self.parse_dimension (query.get ('cropheight', b'-1'))
+				
 				target = query.get ('target', b'invalid')
 				if isinstance (target, list):
 					target = target[0]
@@ -112,6 +116,7 @@ something went wrong...
 				
 				pythumb = PyThumb ()
 				pythumb.set_thumb_dimensions (maxwidth, maxheight)
+				pythumb.set_crop_dimensions (cropwidth, cropheight)
 				
 				if target == 'upload':
 					if not ALLOW_UPLOAD:
