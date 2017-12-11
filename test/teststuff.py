@@ -112,3 +112,31 @@ class TestStuff (TestHelper):
 		pythumb.set_thumb_dimensions (-5, 100)
 		self.assertTrue (pythumb._thumb_width > 0, "thumb with is not >0")
 		self.assertTrue (pythumb._thumb_height > 0, "thumb height is not >0")
+		
+		
+	def test_crop_dimensions (self):
+		pythumb = PyThumb ()
+		
+		pythumb.set_crop_dimensions (300, 300)
+		self.assertEqual (pythumb._crop_width, 300, "wasn't able to update the crop width")
+		self.assertEqual (pythumb._crop_height, 300, "wasn't able to update the crop height")
+		
+		pythumb.set_crop_dimensions (500, 600)
+		self.assertEqual (pythumb._crop_width, 500, "wasn't able to update the crop width")
+		self.assertEqual (pythumb._crop_height, 600, "wasn't able to update the crop height")
+		
+		pythumb.set_crop_dimensions (0, -1)
+		self.assertTrue (pythumb._crop_width > 0, "crop with is not >0")
+		self.assertTrue (pythumb._crop_height > 0, "crop height is not >0")
+		
+		pythumb.set_crop_dimensions (-1, 0)
+		self.assertTrue (pythumb._crop_width > 0, "crop with is not >0")
+		self.assertTrue (pythumb._crop_height > 0, "crop height is not >0")
+		
+		pythumb.set_crop_dimensions (100, -5)
+		self.assertTrue (pythumb._crop_width > 0, "crop with is not >0")
+		self.assertTrue (pythumb._crop_height > 0, "crop height is not >0")
+		
+		pythumb.set_crop_dimensions (-5, 100)
+		self.assertTrue (pythumb._crop_width > 0, "crop with is not >0")
+		self.assertTrue (pythumb._crop_height > 0, "crop height is not >0")

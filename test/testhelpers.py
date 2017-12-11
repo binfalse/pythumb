@@ -49,6 +49,9 @@ class TestHelper (unittest.TestCase):
 		size = os.path.getsize (thumb)
 		self.assertFalse (size < 1000, "thumb size is too small: " + str (size) + "!?")
 		
+		if not pythumb:
+			pythumb = PyThumb ()
+		
 		if thumb_width <= 0:
 			thumb_width = pythumb._thumb_width
 		if thumb_height <= 0:

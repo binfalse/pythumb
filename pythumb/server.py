@@ -23,12 +23,18 @@ import cgi
 import argparse
 import re
 import os
-from pythumb import PyThumb
 import traceback
 import tempfile
 import logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from shutil import copyfile
+
+# for nosetests... is that ugly or what!?
+try:
+	from pythumb import PyThumb
+except:
+	from pythumb.pythumb import PyThumb
+
 
 logging.basicConfig()
 log = logging.getLogger(__name__)
