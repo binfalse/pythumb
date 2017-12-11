@@ -51,6 +51,13 @@ class TestServer (TestHelper):
 			temp.write(response.content)
 			self._check_thumbnail (temp.name, None, 300, 300)
 		
+	def test_no_filename (self):
+		response = requests.post (SERVER, files=dict (file=open ('test/files/pdflike-2.pdf', 'rb')), data=dict (target='upload'))
+		self.assertEqual (response.status_code, 200, "expected an HTTP status 200")
+		with tempfile.NamedTemporaryFile (suffix='.png') as temp:
+			temp.write(response.content)
+			self._check_thumbnail (temp.name, None, 300, 300)
+		
 	def test_larger (self):
 		response = requests.post (SERVER, files=dict (file=open ('test/files/pdflike-2.pdf', 'rb')), data=dict (target='upload', filename='main.pdf', maxwidth="600", maxheight="600"))
 		self.assertEqual (response.status_code, 200, "expected an HTTP status 200")
