@@ -27,7 +27,7 @@ from pythumb import PyThumb
 import traceback
 import tempfile
 import logging
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from shutil import copyfile
 
 logging.basicConfig()
@@ -44,21 +44,22 @@ class WebHandler (BaseHTTPRequestHandler):
 		self.send_response (200)
 		self.send_header ('Content-type',	'text/html')
 		self.end_headers ()
-		self.wfile.write ("""
+		help_text = """
 <!DOCTYPE html>
 <html><head><title>PyThumb</title></head>
 <body>
 test
 </body>
 </html>
-""")
+"""
+		self.wfile.write (help_text.encode ())
 		return
 	
 	def send_error (self, title, message, status=400):
 		print ("ERROR: " + title + "\n" + message)
 		self.send_response (status)
 		self.send_header ('Content-type',	'text/html')
-		self.wfile.write ("""
+		output = """
 <!DOCTYPE html>
 <html><head><title>PyThumb Error</title></head>
 <body>
@@ -67,7 +68,8 @@ something went wrong...
 <h3>""" + title + "</h3><pre>" + message + """</pre>
 </body>
 </html>
-""")
+"""
+		self.wfile.write (output.encode())
 	
 	def serve_thumb (self, thumbnail):
 		with open (thumbnail, 'rb') as fh:
@@ -82,7 +84,7 @@ something went wrong...
 			if isinstance (val, list):
 					val = val[0]
 			try:
-				return int (val)
+				return int (val.decode ())
 			except:
 				log.debug ("exception when parsing dimension")
 				return -1
@@ -90,32 +92,24 @@ something went wrong...
 		log.debug ("val is not valid?")
 		return -1
 	
-	
 	def do_POST (self):
 		try:
-			ctype, pdict = cgi.parse_header (self.headers.getheader ('content-type'))
-			
+			ctype, pdict = cgi.parse_header (self.headers['content-type'])
 			if ctype == 'multipart/form-data':
+				pdict['boundary'] = bytes (pdict['boundary'], "utf-8")
 				query = cgi.parse_multipart (self.rfile, pdict)
 				
-				
-# 				if 'Expect' in self.headers and self.headers['Expect'] == '100-continue':
-# 					self.send_response_only (100)
-					
-				maxwidth = self.parse_dimension (query.get ('maxwidth', '-1'))
-				maxheight = self.parse_dimension (query.get ('maxheight', '-1'))
-				
-				target = query.get ('target', 'invalid')
+				maxwidth = self.parse_dimension (query.get ('maxwidth', b'-1'))
+				maxheight = self.parse_dimension (query.get ('maxheight', b'-1'))
+				target = query.get ('target', b'invalid')
 				if isinstance (target, list):
 					target = target[0]
 				
-				#print (target)
-				
+				target = target.decode ()
 				if target == 'invalid':
 					self.send_error ("Upload failed", "expected a target")
 					return
 				
-				# create a pythumb instance
 				pythumb = PyThumb ()
 				pythumb.set_thumb_dimensions (maxwidth, maxheight)
 				
@@ -124,9 +118,10 @@ something went wrong...
 						self.send_error ("Upload disabled", "This server has the upload mechanism disabled.")
 						return
 					
-					filename = query.get ('filename', 'file')
+					filename = query.get ('filename', b'file')
 					if isinstance (filename, list):
 						filename = filename[0]
+					filename = filename.decode ()
 					
 					content = query.get ('file', 'invalid')
 					if isinstance (content, list):
@@ -143,16 +138,15 @@ something went wrong...
 							with open (orig.name, 'wb') as fh:
 								fh.write (content)
 							
-							copyfile(orig.name, "/tmp/original-upload")
-							
 							if pythumb.thumb_from_file (orig.name, temp.name, filename):
 								self.serve_thumb (temp.name)
 								return
+					
 					self.send_error ("Error generating thumbnail", "there was an error generating the thumbnail", 500)
 					
 					return
 				
-				if _url_regex.match(target):
+				if _url_regex.match (target):
 					if not ALLOW_REMOTE:
 						self.send_error ("Remote thumbnails disabled", "The feature for generating thumbnails of remote websites has been disabled in this instance.")
 						return
@@ -164,14 +158,15 @@ something went wrong...
 					self.send_error ("Error generating thumbnail", "there was an error generating the thumbnail", 500)
 				
 				self.send_error ("Invalid request", "do not understand target: " + target)
-				
+		        
 			else:
 				self.send_error ("Upload failed", "expected multipart/form-data")
-			
+	
 		except:
-			tb = traceback.format_exc()
+			tb = traceback.format_exc ()
 			print (tb)
 			self.send_error ("Upload failed", "exception raised")
+
 
 
 def main():
