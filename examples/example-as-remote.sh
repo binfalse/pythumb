@@ -8,7 +8,7 @@ SERVER=localhost:12346
 
 # create thumbnail of the file test/files/pdflike-2.pdf
 # and store the thumbnail in /tmp/pythumb-tmp-file.png
-curl -s -F target=upload -F filename=main.pdf -F file=@test/files/pdflike-2.pdf $SERVER  > /tmp/pythumb-tmp-file.png
+curl -s -F target=upload -F filename=main.pdf -F maxheight=900 -F file=@test/files/pdflike-2.pdf $SERVER  > /tmp/pythumb-tmp-file.png
 echo "thumbnail of test/files/pdflike-2.pdf stored in /tmp/pythumb-tmp-file.png"
 
 

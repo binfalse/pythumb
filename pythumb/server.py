@@ -31,6 +31,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from shutil import copyfile
 
 logging.basicConfig()
+log = logging.getLogger(__name__)
 
 
 
@@ -75,12 +76,35 @@ something went wrong...
 			self.end_headers ()
 			self.wfile.write (fh.read ())
 	
+	def parse_dimension (self, val):
+		log.debug ("parsing dimension: " + str (val))
+		if val:
+			if isinstance (val, list):
+					val = val[0]
+			try:
+				return int (val)
+			except:
+				log.debug ("exception when parsing dimension")
+				return -1
+			
+		log.debug ("val is not valid?")
+		return -1
+	
+	
 	def do_POST (self):
 		try:
 			ctype, pdict = cgi.parse_header (self.headers.getheader ('content-type'))
 			
 			if ctype == 'multipart/form-data':
 				query = cgi.parse_multipart (self.rfile, pdict)
+				
+				
+# 				if 'Expect' in self.headers and self.headers['Expect'] == '100-continue':
+# 					self.send_response_only (100)
+					
+				maxwidth = self.parse_dimension (query.get ('maxwidth', '-1'))
+				maxheight = self.parse_dimension (query.get ('maxheight', '-1'))
+				
 				target = query.get ('target', 'invalid')
 				if isinstance (target, list):
 					target = target[0]
@@ -93,6 +117,7 @@ something went wrong...
 				
 				# create a pythumb instance
 				pythumb = PyThumb ()
+				pythumb.set_thumb_dimensions (maxwidth, maxheight)
 				
 				if target == 'upload':
 					if not ALLOW_UPLOAD:
@@ -167,6 +192,8 @@ def main():
 	
 	if args.verbose:
 		print ("verbosity turned on")
+		log.setLevel(logging.DEBUG)
+		
 		tmplog = logging.getLogger(__name__)
 		tmplog.setLevel(logging.DEBUG)
 		

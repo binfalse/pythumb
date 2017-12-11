@@ -12,7 +12,8 @@ SERVER='http://localhost:12346'
 
 # create thumbnail of the file test/files/pdflike-2.pdf
 # and store the thumbnail in /tmp/pythumb-tmp-file.png
-response = requests.post (SERVER, files=dict (file=open ('../test/files/pdflike-2.pdf', 'rb')), data=dict (target='upload', filename='main.pdf'))
+# the thumbnail should have a max size of 600x600 pixel
+response = requests.post (SERVER, files=dict (file=open ('../test/files/pdflike-2.pdf', 'rb')), data=dict (target='upload', filename='main.pdf', maxwidth="600", maxheight="600"))
 if response.status_code == 200:
 	with open ('/tmp/pythumb-tmp-file.png', 'wb') as f:
 		f.write(response.content)
