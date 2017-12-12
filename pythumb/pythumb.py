@@ -29,6 +29,7 @@ import sys
 import magic
 import zipfile
 import logging
+import argparse
 import textwrap
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -87,6 +88,8 @@ class PyThumb:
 
 	# set the desired cropping dimensions
 	def set_crop_dimensions (self, width, height):
+		width = int (width)
+		height = int (height)
 		if width > 0:
 			self._crop_width = width
 		else:
@@ -100,6 +103,8 @@ class PyThumb:
 
 	# set the desired thumbnail dimensions
 	def set_thumb_dimensions (self, width, height):
+		width = int (width)
+		height = int (height)
 		if width > 0:
 			self._thumb_width = width
 		else:
@@ -609,5 +614,70 @@ class PyThumb:
 		return False
 
 
+
+
+def main():
+	
+	pythumb = PyThumb ()
+	
+	parser = argparse.ArgumentParser (description='PyThumb -- see https://github.com/binfalse/pythumb')
+	
+	parser.add_argument ('--max-width', nargs='?', dest='maxwidth', type=int, default=pythumb.default_thumb_width, help='max width of the thumbnail (default: ' + str (pythumb.default_thumb_width) + ')')
+	parser.add_argument ('--max-height', nargs='?', dest='maxheight', type=int, default=pythumb.default_thumb_height, help='max height of the thumbnail (default: ' + str (pythumb.default_thumb_height) + ')')
+	
+	parser.add_argument ('--crop-width', nargs='?', dest='cropwidth', type=int, default=pythumb.default_crop_width, help='crop to this width before scaling the thumbnail, especially useful for very unproportional pictures or long websites (default: ' + str (pythumb.default_crop_width) + ')')
+	parser.add_argument ('--crop-height', nargs='?', dest='cropheight', type=int, default=pythumb.default_crop_height, help='crop to this height before scaling the thumbnail, especially useful for very unproportional pictures or long websites (default: ' + str (pythumb.default_crop_height) + ')')
+	
+	parser.add_argument ('--font', nargs='?', dest='font', default=pythumb._font, help='font to use for manually generated thumbnails, only true type fonts are supported (default: ' + str (pythumb._font) + ')')
+	
+	parser.add_argument ('--verbose', action='store_true', default=False, help='print debugging information')
+	
+	parser.add_argument ('--website', dest='website', action='store_true', default=False, help='generate thumbnail of a website (not of a file)')
+	
+	parser.add_argument ('document', help="path to file or website for which you want to generate a thumbnail")
+	parser.add_argument ('thumbnail', help="where to store the thumbnail? must be a non-exising file")
+	
+	
+	
+	
+	args = parser.parse_args ()
+	
+	if args.verbose:
+		print ("verbosity turned on")
+		log.setLevel(logging.DEBUG)
+		
+		tmplog = logging.getLogger(__name__)
+		tmplog.setLevel(logging.DEBUG)
+		
+		tmplog = logging.getLogger("pythumb.pythumb")
+		tmplog.setLevel(logging.DEBUG)
+		
+		tmplog = logging.getLogger("pythumb")
+		tmplog.setLevel(logging.DEBUG)
+	
+	pythumb.set_thumb_dimensions (int (args.maxwidth), int (args.maxheight))
+	pythumb.set_crop_dimensions (int (args.cropwidth), int (args.cropheight))
+	pythumb.set_font (args.font)
+	
+	if args.website:
+		if pythumb.thumb_from_website (args.document, args.thumbnail):
+			print ("successfully generated a thumbnail in " + args.thumbnail)
+			sys.exit (0)
+		else:
+			print ("failed to generate a thumbnail of " + args.document)
+			print ("try running with --verbose")
+			sys.exit (1)
+	else:
+		if pythumb.thumb_from_file (args.document, args.thumbnail, os.path.basename (args.document)):
+			print ("successfully generated a thumbnail in " + args.thumbnail)
+			sys.exit (0)
+		else:
+			print ("failed to generate a thumbnail of " + args.document)
+			print ("try running with --verbose")
+			sys.exit (1)
+	
+
+if __name__ == '__main__':
+	main()
 
 
