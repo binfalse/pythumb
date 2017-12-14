@@ -1,6 +1,6 @@
-# PyThumb -- Generate Thumbnails for Documents
+# PyThumb -- Generate Thumbnails of Documents
 
-PyThumb is a free Python-based tool to generate thumbnails for all kinds of documents.
+PyThumb is a free Python-based tool to generate thumbnails for all kinds of documents or websites.
 It can be used as a [library for other Python software](#as-a-library) or [through a web interface](#through-web), which is for example available as a [Docker image](#run-with-docker).
 
 
@@ -33,7 +33,7 @@ The PyThumb tool requires quite a lot of other software to parse and convert doc
 * ps2pdf
 * python-magic
 
-It is therefore recommended to run it using the corresponding Docker containers
+It is therefore recommended to run it using the corresponding Docker container.
 
 
 ## Usage
@@ -85,6 +85,8 @@ if you want to see the first screen, set crop height for example to 1000
 #### Run with Docker
 
 TODO
+
+see [binfalse/pythumb](https://hub.docker.com/r/binfalse/pythumb/)
 
 ## Running Tests
 

@@ -132,7 +132,7 @@ something went wrong...
 					filename = query.get ('filename', b'file')
 					if isinstance (filename, list):
 						filename = filename[0]
-					filename = filename.decode ()
+					filename = re.sub ('[^0-9a-zA-Z]+', '', filename.decode ()).lower ()
 					
 					content = query.get ('file', 'invalid')
 					if isinstance (content, list):
